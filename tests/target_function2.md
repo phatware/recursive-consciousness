@@ -21,15 +21,15 @@
 
 ### Intentional Bugs and Flaws
 
-1. **Bug**: Currency conversion uses a hardcoded exchange rate table that doesn’t handle missing currency pairs, causing a `KeyError` for unsupported currencies (e.g., "JPY").
+1. **Bug**: Currency conversion uses a hardcoded exchange rate table that doesn't handle missing currency pairs, causing a `KeyError` for unsupported currencies.
 2. **Bug**: The audit log file is opened in write mode (`"w"`), overwriting previous logs on each call, leading to data loss.
 3. **Bug**: For refunds, the amount is added to the balance without checking if the original transaction exists, allowing unlimited refunds.
 4. **Bug**: The `user_tier` check for limits uses case-sensitive comparison, so "Premium" fails validation.
 5. **Logical Inconsistency**: The fraud check occurs after balance updates, potentially processing fraudulent transactions before rejection.
 6. **Assumption**: Assumes `amount` is always positive, but negative amounts could bypass validation for certain transaction types (e.g., transfers).
 7. **Scalability Issue**: Blocked user list is hardcoded and checked with a linear search, inefficient for large lists.
-8. **Error Handling**: Mixes exceptions and status strings, with some errors (e.g., file I/O) unhandled, causing crashes.
-9. **Improvement Opportunity**: Lacks input type validation (e.g., non-numeric `amount` or `account_balance` causes runtime errors).
+8. **Error Handling**: Mixes exceptions and status strings, with some errors unhandled, causing crashes.
+9. **Improvement Opportunity**: Lacks input type validation: non-numeric `amount` or `account_balance` causes runtime errors.
 10. **Improvement Opportunity**: No logging of currency conversion rates for audit trail, hindering debugging.
 
 ## Expected Debugger Findings
