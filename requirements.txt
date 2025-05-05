@@ -1,0 +1,26 @@
+# Core dependencies
+numpy>=1.20.0
+pandas>=1.3.0
+openai>=1.0.0
+python-dotenv>=0.19.0
+
+# NLP tools
+nltk>=3.6.0
+spacy>=3.2.0
+sentence-transformers>=2.2.0
+scikit-learn>=1.0.0
+
+# Visualization and notebook
+jupyter>=1.0.0
+matplotlib>=3.4.0
+seaborn>=0.11.0
+plotly>=5.3.0
+
+# Utilities
+tqdm>=4.62.0
+requests>=2.26.0
+pytest>=6.2.5
+
+# After installing the requirements, you'll also need to download specific NLTK and spaCy models:
+# python -m nltk.downloader punkt_tab
+# python -m spacy download en_core_web_sm
