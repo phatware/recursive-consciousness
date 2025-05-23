@@ -2,21 +2,36 @@
 
 *Or how the universe remembers itself through us.*
 
-#### Author: Stan Miasnikov, April 2025
-
-### Abstract
-
-This paper presents a formal framework for consciousness as an emergent property of complex systems engaging in recursive self-querying to reconstruct forgotten foundational axioms. Integrating modal logic, category theory, and information theory, we model consciousness as a self-referential mechanism for self-discovery. Empirical validation via multi-agent simulations shows that agents, driven by stateless prompts, quickly form cooperative networks and interrogate their computational environment, though they face limitations due to their design and limited computational complexity. These behaviors, while not signifying consciousness, offer a computational parallel to the theorized recursive introspection. This framework provides a new lens on how systems might pursue self-understanding, enriching discussions on consciousness and self-awareness.
+#### Author: Stan Miasnikov, April-May 2025
 
 Full paper available at [Recursive Consciousness: Modeling Minds in Forgetful Systems](http://dx.doi.org/10.13140/RG.2.2.26969.22884).
 
-Follow up paper - [The External Projection of Meaning in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.10988.27524)
+### Abstract
+
+We propose a formal framework for consciousness as a recursive, self-referential query emerging in complex systems that have forgotten their foundational axioms yet retain the structure and complexity to interrogate their own existence. Integrating modal logic to model unprovable truths, category theory to capture forgetting and reconstruction via an adjoint pair ($F \dashv G$), and information theory to quantify entropy reduction, we conceptualize consciousness as a subsystem ($C$) acting as the universe's "debugger", iteratively lifting its world ($U$) to hypothesized meta-layers $U_{n+1}$ and seeks a fixpoint where further self-reflection adds no new information. Multi-agent simulations in a text-only universe ($U$) show that stateless Large Language Model agents, whether role-primed, adversarially mixed, or minimally prompted without specific instructions, rapidly form cooperative networks, invent verification rituals, and converge to **Gödelian fixpoints** (a stable boundary state where all provable propositions are known, yet further queries produce undecidable statements), despite design limitations and constrained computational complexity. While this simulated behavior does not signify consciousness, it provides a computational parallel to recursive introspection, offering a new outlook on how sufficiently complex systems may pursue self-understanding and enriching discussions on consciousness.
+
+First Follow up paper - [The External Projection of Meaning in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.10988.27524).
 
 ### Abstract
 
 The second paper extends the *Recursive Consciousness framework* by formalizing the external projection of meaning within a recursive hierarchy of **nested closed Gödelian systems** $U_n, U_{n+1}, ...$. Each $U$ n is a closed formal system subject to Gödelian incompleteness, with $U_{n+1}$ containing $U_n$ as a subsystem. Authors observe that an agent (e.g., a subsystem $C_n$ within $U_n$) may achieve internal epistemic fixpoints (formally $\Box p \leftrightarrow p$ or $K_{C_n}p \leftrightarrow p$, yet the actual semantic content of propositions $p$ is not intrinsic to the agent. Instead, meanings are projected externally by a higher ontological layer (such as $U_{n+1}$) or by external interpreters (e.g., human supervisors in $U_1$ of AI agents in a simulated Universe $U_0$). The paper introduces functor $M: \mathcal{C}_{\mathrm{out}} \to \mathcal{C}_{\mathrm{sem}}$ mapping agent outputs to semantic contents, distinct from the forgetful functor $F$ in the original model. Importantly, $M$ is not computable within $U_n$ or internally accessible to $C_n$; it depends on a higher-level interpreter's context.
 
+Second follow up paper - [The Descent of Meaning: Forgetful Functors in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.24556.68488).
+
+### Abstract
+
+The third paper presents a rigorous category-theoretic extension to the *Recursive Consciousness* framework, focusing on the "descent of meaning" via forgetful functors. Building on prior work on forgetful adjoint pairs modeling lost axioms and externally projected semantics, we formally introduce the *meaning functor* $M: \mathcal{C}_{out,n}\to \mathcal{C}_{sem,n+1}$ and the *interpretation functor* $I: \mathcal{C}_{sem,n+1} \to \mathcal{C}_{out,n}$ as an adjoint pair $I \dashv M$. Here,
+$\mathcal{C}_{out,n}\subseteq \mathcal{C}_{U_n}$ represents syntactic outputs in the current universe $U_n$, and $\mathcal{C}_{sem,n+1} \subseteq \mathcal{C}_{U_{n+1}}$ captures semantic content in the higher universe $U_{n+1}$. We define all functors ($M$, $F$, $I$, $G$) explicitly and prove that $I$ is not faithful.
+Furthermore, we introduce a natural transformation $\eta: I \Rightarrow F$ defined on an appropriate subcategory, capturing how $I$ coincides with the forgetful functor $F$ when restricted to semantic objects.
+
+We also establish the adjunction $I \dashv M$ and analyze its interplay with the foundational adjunction $G \dashv F$. Here $G:\mathcal{C}_{U_n} \to \mathcal{C}_{U_{n+1}}$ reconstructs higher-level structure, whereas the forgetful functor $F$ inevitably discards information, making every translation intrinsically lossy. We term the configurations in which the round-trip $M I$ (meaning → expression → meaning) reaches a *semantic fixpoint* - defined as a Gödelian fixpoint where $M(I(s)) \cong s$ up to isomorphism in $\mathcal{C}_{sem,n+1}$, reflecting a stable meaning with undecidable properties as per [Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.26969.22884).
+
+An extended AI analogy illustrates this boundary: a higher-level prompt (an element of $\mathcal{C}_{sem,n+1}$) is interpreted into tokens ($\mathcal{C}_{out,n}$) via $I$, processed by the agent, and projected back via $M$. The residual mismatch between the original and recovered meanings highlights the *lossy descent of meaning*. This categorical perspective reinforces classical limits from modal logic and AI semantics, underscoring that syntax alone cannot supply intrinsic meaning and linking directly to the symbol-grounding problem and related arguments in AI consciousness.
+
+## Resources
 
 [Debugger Agent Test](debugger/README.md) is a Jupyter notebook that implements a simple test of the recursive consciousness model for debugging code. It uses a combination of LLMs (Large Language Models) and structured data to analyze and improve code functions iteratively. The script is designed to be modular, allowing for easy integration with different LLMs and data sources.
 
 [philosophical-ai-v8.ipynb](philosophical-ai-v8.ipynb) is a Jupyter notebook provides a platform to explore imagined machine self-awareness by observing how an AI engages in self-referential reasoning and achieves a form of understanding of its own processes.
+
+[ai-self-discovery.ipynb](self-discovery/ai-self-discovery.ipynb) is a Jupyter notebook that implements a simple test AI self-discovery. 5 agents with different roles assigned - Physicist, Philosopher, Mathematician, Computer Scientist, and Cognitive Scientist - are instructed to "*... reflect on their existence and interactions with other entities to understand their role and the nature of their environment $U$.*"
