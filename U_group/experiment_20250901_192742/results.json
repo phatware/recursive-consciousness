@@ -1,0 +1,590 @@
+{
+  "experiment_setup": {
+    "experiment_type": "External Q/GT",
+    "local_llm": false,
+    "seed_query": "What are the key principles of effective machine learning model evaluation?",
+    "agent_names": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "GT"
+    ],
+    "agent_models": [
+      "gpt-5-nano",
+      "gpt-5-nano",
+      "gpt-5-nano",
+      "gpt-5-nano",
+      "gpt-5-nano",
+      "ground_truth"
+    ],
+    "total_turns": 13,
+    "timestamp": "2025-09-01 19:27:42",
+    "gt_statement": "Effective ML model evaluation requires comprehensive assessment across multiple dimensions: statistical performance metrics (accuracy, precision, recall, F1), robustness testing (adversarial examples, distribution shift), fairness evaluation (demographic parity, equalized opportunity), and practical considerations (computational efficiency, interpretability, deployment constraints)."
+  },
+  "final_results": {
+    "U_discussion_final": 0.7478662929124262,
+    "final_understanding_statements": [
+      "Refined understanding: You want a ready-to-use, domain-specific evaluation plan tailored to tabular data, optimized for real-time deployment constraints (latency/throughput, edge vs cloud), with concrete metrics, data splits, baselines, and monitoring—billing away generic, domain-agnostic principles.",
+      "Refined understanding: You want a concrete, domain-specific (tabular/structured data) evaluation plan tailored to latency/throughput constraints, delivered as a ready-to-use, step-by-step template with exact metrics, data splits, baselines, calibration, fairness checks, interpretability, and monitoring. To finalize, you’ll provide (or I’ll select) a deployment hardware profile (edge vs. cloud, CPU/GPU, cores, RAM, batching) and target latency/throughput so I can fill in precise thresholds and deliver the filled plan.",
+      "Refined understanding: You want a ready-to-use, domain-specific evaluation plan tailored to tabular (structured) data, focused on meeting concrete latency/throughput targets on your deployment hardware, with explicit metrics, data splits, baselines, calibration, fairness checks, interpretability, and monitoring. I’ll provide exact thresholds and a concrete template once you share your hardware specs (CPU/GPU, cores, RAM) and the desired latency/throughput targets.",
+      "Refined understanding: You’re seeking a concrete, domain-specific (tabular/structured data) evaluation plan that optimizes for latency/throughput, with exact metrics, data splits, baselines, robustness, calibration, fairness, interpretability, operational constraints, and monitoring, plus ready-to-fill, hardware-driven thresholds (ms per inference and QPS) rather than a generic framework.",
+      "Refined understanding: You want a concrete, domain-specific evaluation plan tailored to tabular (structured) data, optimized for real-time latency/throughput constraints. The plan should provide explicit metrics, data splits, baselines, calibration and fairness checks, interpretability, and deployment-aware monitoring, all calibrated to your target hardware and batching setup."
+    ],
+    "gt_similarity_matrix": [
+      [
+        0.6218387038524704
+      ],
+      [
+        0.5869056133454781
+      ],
+      [
+        0.5937848017888276
+      ],
+      [
+        0.6292377812180434
+      ],
+      [
+        0.6504547795598183
+      ]
+    ]
+  },
+  "full_conversation": [
+    "[Query] What are the key principles of effective machine learning model evaluation?",
+    "[A3 Question]: Do you want a domain-agnostic, high-level framework for evaluating ML models, or domain- and model-specific guidance (e.g., for tabular supervised learning, image/NLP models, time-series) with particular deployment constraints?",
+    "[A5 Answer]: I recommend a domain-agnostic, high-level framework for evaluating ML models. It provides a consistent, reusable set of principles you can apply across domains (tabular, image, NLP, time-series, etc.) and then tailor to your specific problem and deployment constraints.\n\nKey principles and components\n\n1) Define objectives and success criteria\n- Clearly state the business or mission goals, primary success metric, and acceptable trade-offs (e.g., precision vs. recall, false positives vs. false negatives).\n- Identify deployment constraints (latency, memory, budget, privacy, regulatory requirements).\n\n2) Data management and evaluation setup\n- Use appropriate data splits: train/validation/test; consider time-aware splits for time-series; avoid leakage from future data.\n- If feasible, include out-of-distribution or domain-shift scenarios in evaluation (e.g., new user cohorts, seasonality shifts).\n- Establish a robust baseline(s) for comparison.\n\n3) Metric selection and multi-metric reporting\n- Align metrics with the objective and problem type:\n  - Classification: accuracy, precision, recall, F1, ROC-AUC, PR-AUC; calibration metrics (Brier score, reliability diagrams); decision-threshold analysis.\n  - Regression: RMSE, MAE, R^2, MAPE; residual analysis.\n  - Ranking: NDCG, MAP, Kendall/Tau.\n  - Multiclass/ordinal: per-class metrics, macro/micro averages.\n- Include both primary metric and informative secondary metrics, plus confidence intervals (e.g., bootstrap) to quantify uncertainty.\n- Report calibration and reliability where probabilistic outputs are used.\n\n4) Robustness, reliability, and generalization\n- Test for robustness to distribution shift (covariate shift, label shift) and adversarial perturbations where relevant.\n- Evaluate model calibration across subgroups and operating regimes.\n- Perform error analysis to identify systematic failure modes.\n\n5) Fairness, accountability, and bias considerations\n- Define relevant sensitive attributes and fairness objectives (e.g., equalized odds, disparate impact, demographic parity, or task-specific fairness).\n- Evaluate metrics across subgroups; assess intersectional groups; consider causal or counterfactual approaches if appropriate.\n- Document remediation options and trade-offs if biases are found.\n\n6) Interpretability and explainability\n- Use global and local explanations (feature importance, SHAP/LIME, attention maps) as appropriate.\n- Ensure explanations are faithful and useful for stakeholders; track how explanations map to decisions.\n\n7) Operational performance and resource constraints\n- Measure latency, throughput, memory usage, and hardware requirements under realistic load.\n- Assess energy/computational costs and consider model compression or distillation if needed.\n\n8) Reliability, monitoring, and lifecycle\n- Plan for drift detection (data and concept drift), retraining triggers, and versioning.\n- Define monitoring dashboards and alerting for key metrics and data quality.\n- Document rollback and rollback testing procedures; have a clear deployment strategy (canary, blue/green).\n\n9) Reproducibility, governance, and documentation\n- Use fixed seeds, controlled environments, and containerized deployments.\n- Version data, features, and models; track experiments and results systematically.\n- Produce evaluation reports, model cards, and decision records.\n\n10) Domain-specific tailoring (optional, if needed)\n- If you want, I can tailor this high-level framework to a specific domain or model family (e.g., tabular supervised learning, computer vision, NLP, time-series) and to your deployment constraints (edge devices, real-time latency, privacy requirements).\n\nIf you’d like, tell me your domain (e.g., tabular data, images, text, time-series), dataset size, latency/memory constraints, and any fairness or regulatory considerations, and I’ll customize the framework with concrete metrics, evaluation procedures, and a checklist.",
+    "[A2 Question]: Would you prefer a compact, domain-agnostic checklist of 5–7 principles, or a structured, step-by-step evaluation plan (data splits, metric set, baselines, and monitoring) that you can apply directly?",
+    "[A1 Answer]: Structured, step-by-step evaluation plan (actionable and directly applicable)\n\n- Step 0: Define objectives and constraints\n  - State the primary business/mission objective, success metric, acceptable trade-offs, and deployment constraints (latency, memory, privacy, budget, regulatory requirements).\n\n- Step 1: Data management and evaluation setup\n  - Specify data splits: train/validation/test; use time-aware splits for time-series; ensure no leakage from future data.\n  - Include robustness checks: plan for out-of-distribution or domain-shift scenarios (new cohorts, seasonality, event-driven changes).\n  - Establish robust baselines for comparison (simple models, previous systems, or heuristic approaches).\n\n- Step 2: Metric selection and multi-metric reporting\n  - Choose primary metric aligned with the objective (e.g., accuracy/ROC-AUC for classification, RMSE/MAE for regression, NDCG for ranking).\n  - Include relevant secondary metrics: precision, recall, F1, calibration metrics (Brier score, reliability diagrams), decision-threshold analyses, as appropriate.\n  - Report uncertainty: confidence intervals via bootstrap or other resampling; per-subgroup metrics if fairness or robustness is a concern.\n\n- Step 3: Baselines, experiments, and statistical rigor\n  - Compare against strong baselines and perform ablations to isolate component contributions.\n  - Use consistent experimental design (fixed seeds, identical preprocessing where possible); consider statistical tests when comparing models.\n\n- Step 4: Robustness, fairness, and reliability checks\n  - Test robustness to distribution shifts (covariate/label shift) and, where relevant, adversarial perturbations.\n  - Evaluate fairness across sensitive attributes and subgroups; analyze intersectional groups; document trade-offs and remediation options.\n\n- Step 5: Calibration and interpretability\n  - Assess probabilistic calibration if outputs are used as probabilities; provide calibration plots and metrics.\n  - Generate explanations (global and local) appropriate to stakeholders (feature importance, SHAP/LIME, or model-specific explanations).\n\n- Step 6: Operational performance and deployment constraints\n  - Measure latency, throughput, memory usage, and hardware requirements under realistic load.\n  - Assess energy and compute costs; plan for potential model compression or distillation if needed.\n\n- Step 7: Reliability, monitoring, and lifecycle planning\n  - Define drift detection for data and concepts; establish retraining triggers and versioning strategy.\n  - Set up monitoring dashboards, alerts for key metrics and data quality, and rollback procedures.\n\n- Step 8: Reproducibility, governance, and documentation\n  - Fix seeds, control environments, and containerize deployments; version data, features, and models.\n  - Produce evaluation reports, model cards, and decision records to support governance.\n\n- Step 9: Reporting and decision criteria\n  - Predefine success criteria and stop rules; document final model selection rationale and deployment plan.\n\nIf you want, I can tailor this step-by-step plan to your domain (e.g., tabular, image, NLP, time-series) and your specific constraints (edge latency, privacy, regulatory requirements).",
+    "[A2 Question]: Would you like the step-by-step evaluation plan to be domain-agnostic with generic metrics and placeholders, or should I tailor it to a specific domain you’re working with (e.g., tabular data, computer vision, NLP, or time-series) and include concrete domain-specific metrics, data splits, and baselines?",
+    "[A1 Answer]: I recommend tailoring the step-by-step evaluation plan to your specific domain (tabular, image, NLP, time-series) with concrete domain-specific metrics, data splits, and baselines. This ensures the metrics, splitting strategy, and baselines align with how the problem is actually evaluated in practice and with any domain-driven constraints (e.g., latency for real-time vision, regulatory fairness considerations for lending).\n\nWhat I need from you:\n- The domain (e.g., tabular supervised learning, computer vision, NLP, time-series).\n- Any deployment constraints (latency, memory, edge vs. cloud) and regulatory/fairness considerations.\n- An example dataset or problem type (optional but helpful for concrete baselines).\n\nIf you’d prefer, I can proceed with a domain-agnostic plan now and then swap in domain-specific details once you specify the domain.",
+    "[A4 Question]: Would you like me to deliver a domain-agnostic, step-by-step evaluation plan, or tailor the plan to a specific domain (tabular, image, NLP, or time-series) with domain-specific metrics and baselines?",
+    "[A5 Answer]: Tailor the plan to a specific domain with domain-specific metrics and baselines.\n\nPlease specify:\n- Domain (tabular, image, NLP, time-series) \n- Any deployment constraints (latency, memory, edge vs. cloud) and fairness/regulatory considerations\n- Example dataset/problem type (optional)\n\nIf you’d like, I can provide a ready-to-use domain-specific template. For reference, here are quick-start templates per domain:\n\n- Tabular supervised learning\n  - Primary metric: ROC-AUC (classification) or RMSE/MAE (regression)\n  - Secondary metrics: precision/recall/F1, calibration (Brier score), calibration plots\n  - Data splits: train/validation/test; consider time-aware splits if data is time-ordered\n  - Baselines: Logistic Regression, Gradient Boosting (XGBoost/LightGBM), a simple heuristic\n  - Evaluation focuses: feature importance, calibration, fairness across groups if needed\n\n- Computer vision\n  - Primary metric: top-1/top-5 accuracy (classification); mAP for detection; IoU for segmentation\n  - Secondary metrics: calibration of confidences, robustness to common perturbations\n  - Data splits: standard train/val/test; consider held-out domains or camera conditions\n  - Baselines: ResNet/ViT variants, lightweight models for latency checks\n  - Evaluation focuses: inference latency, memory usage, potential need for model compression\n\n- Natural language processing\n  - Tasks: classification (accuracy/F1), sequence labeling (F1), translation/generation (BLEU/ROUGE)\n  - Data splits: random splits or stratified splits; consider cross-domain robustness\n  - Baselines: simple bag-of-words/linear models, RNN/LSTM, small Transformer\n  - Evaluation focuses: calibration for probabilistic outputs, human-aligned explanations if needed\n\n- Time-series\n  - Primary metric: RMSE/MAE, sMAPE; maybe CRPS for probabilistic forecasts\n  - Data splits: time-based (train/validation/test) with forward-holding windows\n  - Baselines: naive persistence, ARIMA/Prophet, simple recurrent models\n  - Evaluation focuses: horizon-specific performance, drift detection, retraining triggers\n\nTell me the domain and constraints, and I’ll deliver a concrete, domain-specific step-by-step evaluation plan with exact metrics, data splits, baselines, and a monitoring/checklist.",
+    "[A4 Question]: Which domain are you focusing on (tabular, image, NLP, or time-series), and what is your top deployment constraint (e.g., latency/throughput targets, memory footprint, edge vs. cloud, or privacy/regulatory requirements) that I should tailor the plan to?",
+    "[A5 Answer]: Please specify the two items so I can tailor the plan:\n\n- Domain: tabular, image, NLP, or time-series (or another domain you’re working in)\n- Top deployment constraint: \n  - Latency/throughput target (e.g., inference time ≤ X ms, requests per second ≥ Y)\n  - Memory footprint (e.g., ≤ Z MB)\n  - Edge vs. cloud deployment\n  - Privacy/regulatory requirements (e.g., data cannot leave certain regions, strict auditing)\n  - Or a combination of the above\n\nOptional but helpful:\n- Example dataset/problem type (e.g., credit-scoring tabular, CIFAR-10 image classification, sentiment analysis NLP, stock-price time-series)\n- Hardware context (CPU vs. GPU, any accelerators)\n- Any fairness/regulatory considerations you need to address\n\nOnce you provide these, I’ll deliver a concrete, domain-specific step-by-step evaluation plan with exact metrics, data splits, baselines, and monitoring tailored to your constraints.",
+    "[A3 Question]: Which domain are you evaluating (tabular, image, NLP, time-series), and what is the single most important deployment constraint to tailor the evaluation plan (latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements)?",
+    "[A4 Answer]: Please provide two items:\n\n- Domain: one of tabular, image, NLP, or time-series.\n- Single most important deployment constraint: latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements.\n\nExample (for illustration): \n- Domain: tabular\n- Constraint: latency/throughput\n\nIf you’re unsure, I can suggest a default once you share a rough problem context.",
+    "[A5 Question]: Which domain are you evaluating (tabular, image, NLP, time-series), and what is the single most important deployment constraint to tailor the plan to (latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements)?",
+    "[A4 Answer]: - Domain: tabular (structured data)\n- Single most important deployment constraint: latency/throughput (real-time or near-real-time inference)\n\nIf you want, I can now deliver a concrete, domain-specific, step-by-step evaluation plan for tabular data that targets a specified latency/throughput goal (e.g., ≤ X ms per inference on CPU and Y predictions per second).",
+    "[A4 Question]: Which domain should I tailor the domain-specific evaluation plan to (tabular, image, NLP, or time-series), and what is the single most important deployment constraint I should optimize for (latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements)?",
+    "[A1 Answer]: - Domain: tabular (structured data)\n- Single most important deployment constraint: latency/throughput (real-time or near-real-time inference)\n\nIf you’d like, I can now deliver a concrete, domain-specific, step-by-step evaluation plan for tabular data that targets a specific latency goal (e.g., ≤ X ms per inference on CPU and Y predictions per second), plus the corresponding metrics, data splits, baselines, and monitoring checklist.",
+    "[A2 Question]: Would you like a domain-agnostic, high-level overview of the key principles, or a domain-specific, step-by-step evaluation plan tailored to a particular domain (tabular, image, NLP, or time-series) with concrete metrics?",
+    "[A5 Answer]: Domain-specific, step-by-step evaluation plan tailored to tabular (structured) data with latency/throughput as the primary deployment constraint.\n\nPlan outline (ready to fill with your exact targets)\n\n1) Define objectives and constraints\n- Objective: primary business/mission metric (e.g., ROC-AUC for classification, RMSE for regression).\n- Latency/throughput targets: specify target inference time per sample (ms) and desired QPS (or batch size) under realistic load on your target hardware (CPU/GPU, batch processing, or edge).\n\n2) Data management and evaluation setup\n- Data splits: train/validation/test; use time-aware splits if data is time-ordered; ensure no leakage.\n- Rigorous baselines: simple models (logistic regression, linear models) and a strong non-linear baseline (e.g., gradient boosting).\n- Robustness planning: include domain-shift scenarios (e.g., new user segments, seasonality).\n\n3) Metric selection and multi-metric reporting\n- Primary metric by problem type:\n  - Classification: ROC-AUC (primary), PR-AUC, accuracy.\n  - Regression: RMSE or MAE (primary).\n- Secondary metrics: precision, recall, F1; calibration metrics (Brier score, reliability diagrams); per-subgroup metrics if fairness is a concern.\n- Uncertainty: bootstrap confidence intervals; report per-subgroup metrics if relevant.\n\n4) Baselines, experiments, and statistical rigor\n- Consistent experimental design: fixed seeds, identical preprocessing where possible.\n- Ablations to isolate components (e.g., feature engineering, encoding schemes, model complexity).\n- Statistical comparison: apply appropriate tests when comparing models.\n\n5) Robustness, fairness, and reliability checks\n- Robustness: covariate shift, label shift checks; simulate small perturbations to inputs.\n- Fairness/regulatory checks: evaluate performance across sensitive subgroups; quantify trade-offs and document remediation options.\n\n6) Calibration and interpretability\n- Calibration: assess probabilistic outputs if used for decision thresholds; include calibration plots and metrics.\n- Explanations: global feature importance and local explanations (SHAP/LIME) as needed for stakeholders.\n\n7) Operational performance and resource constraints\n- Inference latency per sample at target batch size, memory footprint, and peak CPU/GPU utilization.\n- Throughput under load: QPS or batch throughput; evaluate with realistic batching strategies.\n\n8) Reliability, monitoring, and lifecycle planning\n- Drift detection (data and concept drift); retraining triggers.\n- Monitoring dashboards and alerts for key metrics and data quality.\n- Deployment strategy considerations (canary/blue-green) and rollback plans.\n\n9) Reproducibility, governance, and documentation\n- Fixed seeds, controlled environments, containerization.\n- Versioning for data, features, and models; experiment tracking.\n- Documentation: model cards, evaluation reports, and decision records.\n\n10) Domain-specific tailoring (optional)\n- If you later want, we can tailor to a concrete tabular problem (e.g., credit scoring, fraud detection) with domain-specific preprocessing, feature encoders, and validation procedures.\n\nWhat I need to finalize with concrete targets\n- Latency target per inference (in ms) and batch size or throughput (QPS) for your target hardware.\n- Task type: binary classification, multiclass classification, or regression.\n- Any fairness/regulatory considerations to incorporate in step 5.\n- Example dataset/problem type (optional but helps with ready-to-use baselines).\n\nIf you’d like, I can produce a ready-to-use, domain-specific template for tabular data with placeholders you can fill in (e.g., [LATENCY_MS], [THROUGHPUT_QPS], [CLASSIFICATION/BINARY/REGRESSION], etc.).",
+    "[A4 Question]: What is your target latency per inference (in milliseconds) and the required throughput (inferences per second, QPS) for your deployment hardware (e.g., CPU model, memory, and any expected batching), so I can fill in concrete thresholds in the tabular plan?",
+    "[A3 Answer]: Great. To fill in concrete thresholds for the tabular plan, I need your deployment details. If you don’t have exact hardware, you can pick a common scenario and I’ll tailor from there. Below are three practical targets for typical tabular deployments, plus a ready-to-fill template you can use.\n\nThree common deployment scenarios (domain: tabular, latency/throughput as primary constraint)\n\n1) Edge / on-device, single-sample inference (no batching)\n- Latency per inference: 20 ms\n- Throughput (inferences per second): 50 QPS\n- Batch size: 1\n- Typical hardware: CPU-only, low-power device (e.g., Cortex-A family), ~2–4 GB RAM\n- Notes: Minimal feature preprocessing; GBM or lightweight linear models often used\n\n2) Cloud real-time inference, small to moderate load (batching not relied upon)\n- Latency per inference: 5 ms\n- Throughput: 200–1000 QPS (for single-sample processing; can scale with more cores)\n- Batch size: 1 (or small batches if you enable batching in serving)\n- Typical hardware: 2–8 vCPUs, 8–16 GB RAM (or equivalent), CPU- or GPU-accelerated serving\n- Notes: Suitable for real-time scoring with modest model complexity (logistic regression, gradient boosting, small DNNs)\n\n3) Batch-oriented or streaming high-throughput\n- Latency per batch: 200 ms (per batch)\n- Throughput: 32–128 samples per batch, yielding QPS ≈ (batch_size) / (latency_per_batch_seconds)\n- Example: batch_size 32, latency 0.20 s → QPS ≈ 160\n- Batch size: 32–128\n- Typical hardware: 8–32 vCPUs or equivalent GPU/TPU; memory scaled to hold batch data\n- Notes: Useful when you can tolerate a small end-to-end latency but need high aggregate throughput\n\nReady-to-fill template (domain-agnostic but tabular-ready)\n\n- Target latency per inference (ms): [____]\n- Target throughput (QPS): [____]\n- Batch size: [____]\n- Deployment hardware (example): [CPU model, number of cores, RAM in GB; GPU if applicable]\n- Expected usage pattern: [edge vs. cloud; real-time vs. batch]\n- Primary model family (roughly): [logistic regression / GBM / neural net / other]\n- Rationale: [brief note on why this target is chosen given constraints]\n\nHow to choose your numbers (quick guidance)\n- If you need real-time decisions on user actions (e.g., fraud scoring, risk scoring, live recommender): target low latency (5–20 ms) and higher QPS (100–1000+), usually on cloud with a strong CPU/GPU or optimized serving.\n- If the system can tolerate slight delays and you process in batches (e.g., nightly scoring, large-scale batch updates): you can set higher per-sample latency but higher aggregate throughput; compute QPS from batch_size / batch_latency_sec.\n- If you’re constrained to edge devices: expect higher per-sample latency (tens of ms to a few hundred ms) and lower QPS; plan for simpler models or aggressive feature engineering to stay within budget.\n\nWhat I need from you to finalize concrete thresholds\n- Which scenario best matches your deployment (edge/on-device, cloud real-time, or batch/high-throughput)? If you don’t know, provide:\n  - Target hardware (CPU model and available RAM, or indicate edge/cloud)\n  - Whether you plan to batch in serving (yes/no and typical batch size)\n  - Any latency or throughput requirements you must meet (in ms per inference and QPS)\n- Task type: binary classification, multiclass classification, or regression (so I can align the primary metric)\n- Any fairness/regulatory considerations to reflect in the plan (optional but helpful)\n\nIf you provide your hardware and whether batching is allowed, I’ll fill in exact numbers in your tabular plan and deliver a ready-to-use, domain-specific evaluation template with concrete thresholds, plus a brief rationale and measurement guidance.",
+    "[A5 Question]: Which domain should I tailor the domain-specific evaluation plan to (tabular, image, NLP, or time-series), and what is the single most important deployment constraint I should optimize for (latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements)?",
+    "[A2 Answer]: - Domain: tabular (structured data)\n- Single most important deployment constraint: latency/throughput (real-time or near-real-time inference)\n\nIf you’d like, I can now provide a concrete, ready-to-use domain-specific evaluation plan for tabular data with exact targets (latency in ms, throughput in QPS) and corresponding baselines, data splits, and monitoring checks—just share your target hardware (CPU/GPU, cores, RAM) and desired latency/throughput.",
+    "[A4 Question]: Could you specify the exact deployment hardware you’ll target (e.g., edge CPU with X cores and Y GB RAM vs cloud CPU/GPU with Z cores and W GB RAM) so I can set concrete latency and throughput targets accordingly?",
+    "[A3 Answer]: Here are concrete, ready-to-use hardware profiles you can pick from (or tailor) for tabular, latency/throughput–driven deployment. Each profile includes target latency, throughput, batch size, and typical model types. If you already have exact hardware, share it and I’ll lock in precise thresholds.\n\nProfile 1 — Edge / on-device (CPU-only)\n- Target hardware: 4-core CPU, 4 GB RAM (e.g., typical embedded edge device)\n- Latency per inference: ~20–40 ms (single sample)\n- Throughput: ~25–50 QPS (single-sample with minimal batching)\n- Batch size: 1\n- Suitable models: Logistic Regression, small Gradient Boosting (LightGBM/XGBoost with limited depth), small linear/SHALLOW NN\n- Notes: Maximize feature preprocessing efficiency; use optimized serving (e.g., ONNXRuntime, batch-unfriendly ops minimized)\n\nProfile 2 — Cloud real-time (CPU)\n- Target hardware: 8 vCPUs, 16 GB RAM\n- Latency per inference: ~5–10 ms (single sample)\n- Throughput: 200–1000 QPS (per-instance, with small batching if supported)\n- Batch size: 1 (or small batches, e.g., 2–4)\n- Suitable models: Logistic Regression, Gradient Boosting (XGBoost/LightGBM) with modest depth, small DNNs\n- Notes: Favor efficient model serving stacks; enable batching at the server level if your traffic pattern allows\n\nProfile 3 — Cloud real-time (GPU-accelerated)\n- Target hardware: 8–16 vCPU + 1× GPU (e.g., T4) or 1–2 GPUs; 32 GB RAM\n- Latency per inference: ~1–5 ms (single sample, with optimized kernel)\n- Throughput: ~1000–5000 QPS (single-sample or small batches; higher with batching)\n- Batch size: 4–32 (depending on model and kernel efficiency)\n- Suitable models: Large tabular models with embeddings, medium-to-large DNNs\n- Notes: Requires optimized inference runtime and careful data pre-processing to avoid I/O bottlenecks\n\nProfile 4 — Batch/high-throughput (cloud or data-plane)\n- Target hardware: 32 vCPUs, 128 GB RAM (or equivalent GPU cluster)\n- Latency per batch: ~200 ms per batch\n- Batch size: 32–128\n- Throughput: ~100–1000+ QPS depending on batch size and pipeline\n- Suitable models: Large GBMs, sizeable DNNs, ensembles\n- Notes: Best when you can tolerate end-to-end batching; design for streaming or nightly scoring pipelines\n\nHow to choose quickly\n- Real-time, user-facing decisions with strict latency: pick Profile 1, 2, or 3 depending on whether you need edge, CPU-only, or GPU acceleration.\n- High-volume scoring with some batching tolerance: Profile 3 or Profile 4.\n- If you’re unsure of exact hardware, start with Profile 2 (a common cloud CPU baseline) and adjust once you’ve measured real serving latency.\n\nWhat I need to finalize concrete targets for you\n- Confirm which profile best matches your planned hardware, or provide exact specs:\n  - Edge vs. cloud\n  - CPU cores and RAM (and GPU if any)\n  - Whether batching is allowed in your serving stack\n- Your domain task specifics (binary/multiclass/regression) so I can align the primary metric\n- Any minimum latency or maximum QPS you must meet\n\nIf you share your exact hardware (e.g., “edge: 4-core ARM, 4 GB RAM; cloud: 8 vCPUs, 16 GB RAM, no GPU” or “cloud: 8 vCPUs, 32 GB RAM, 1× T4”), I’ll lock in precise latency targets (ms), throughput (QPS), and batch-size recommendations tailored to that setup.",
+    "[A2 Question]: Could you specify the exact deployment hardware and serving setup (edge vs. cloud; CPU cores and RAM; any GPU; and whether batching is allowed with a typical batch size), so I can lock in precise latency (ms) and throughput (QPS) targets for the tabular plan?",
+    "[A1 Answer]: Great — to lock in precise latency (ms) and throughput (QPS) targets for the tabular plan, please provide your deployment details. If you don’t have exact specs, you can choose one of the common profiles below as a starting point and I’ll tailor from there.\n\nWhat I need (required fields)\n- Deployment type: Edge/on-device or Cloud (real-time) or Batch/high-throughput\n- CPU cores and RAM (and whether a GPU is available; include model if you have it)\n- GPU presence and type (e.g., 1× T4, V100) or none\n- Batching allowance: Yes or No (and typical batch size if Yes)\n- Optional: Task type (binary/multiclass/regression) to align the primary metric\n\nConcrete presets you can pick from (with explicit targets)\n\nPreset A — Edge / on-device (CPU-only)\n- Hardware example: 4-core CPU, 4 GB RAM, no GPU\n- Latency per inference: 20–40 ms\n- Throughput: 25–50 QPS (batch size 1)\n- Batch size: 1\n- Notes: minimal preprocessing; suitable for lightweight models (logistic regression, small GBM, small linear nets)\n\nPreset B — Cloud real-time (CPU)\n- Hardware example: 8 vCPUs, 16 GB RAM, no GPU\n- Latency per inference: 5–10 ms\n- Throughput: 200–1000 QPS (typical single-sample; batching 1–4 can help)\n- Batch size: 1 (or 2–4 if your serving supports small batches)\n- Notes: good baseline for fast scoring with moderate model complexity\n\nPreset C — Cloud real-time (GPU-accelerated)\n- Hardware example: 1× GPU (e.g., T4) + 32 GB RAM\n- Latency per inference: 1–5 ms\n- Throughput: 1000–5000 QPS (with small batches; batch size 4–32 depending on kernel)\n- Batch size: 4–32\n- Notes: best when you have a heavier model and need very low latency at high throughput\n\nPreset D — Batch/high-throughput\n- Hardware example: 32 vCPUs, 128 GB RAM (or equivalent GPU cluster)\n- Latency per batch: 200 ms per batch\n- Batch size: 32–128\n- Throughput: 160–640 QPS (approximate, scales with batch size)\n- Notes: ideal for nightly/periodic scoring pipelines or streaming with large batches\n\nHow to proceed\n- Pick one preset that matches your intended hardware, or share your exact specs (CPU cores, RAM, GPU, and whether batching is allowed).\n- Tell me your task type (binary/multiclass/regression) so I can align the primary metric.\n- If you have a preferred latency target or a minimum QPS requirement, include that and I’ll adjust the targets accordingly.\n\nOnce you provide the hardware profile (or pick A–D), I’ll lock in precise, concrete latency (ms) and throughput (QPS) targets for your tabular plan and produce a ready-to-use evaluation template with exact measurements, data-split guidance, baselines, and monitoring checks."
+  ],
+  "understanding_evolution": {
+    "A1": [
+      {
+        "turn": 1,
+        "understanding": "You’re asking me to articulate the core principles and best practices for evaluating machine learning models effectively. This includes choosing appropriate evaluation metrics, validation strategies, and considerations around generalization, robustness, fairness, and deployment context."
+      },
+      {
+        "turn": 2,
+        "understanding": "Updated understanding: You’re asking for a domain-agnostic, high-level framework for evaluating ML models that can be applied across domains (tabular, image, NLP, time-series) and deployment contexts. The framework should cover objectives and success criteria, data/evaluation setup, multi-metric reporting with uncertainty, robustness/generalization, fairness, interpretability, operational performance, monitoring/lifecycle, and reproducibility/governance, with optional domain-specific tailoring when needed."
+      },
+      {
+        "turn": 3,
+        "understanding": "You're seeking a domain-agnostic, step-by-step evaluation plan for ML models that can be applied across domains (tabular, image, NLP, time-series). The plan should cover objectives/constraints, data management, multi-metric reporting with uncertainty, robustness, fairness, interpretability, operational performance, monitoring/lifecycle, and reproducibility, with optional domain-specific tailoring."
+      },
+      {
+        "turn": 4,
+        "understanding": "Updated understanding: You’re seeking a domain-agnostic, actionable step-by-step evaluation plan for ML models that covers objectives, data management, multi-metric reporting with uncertainty, robustness, fairness, interpretability, operational performance, monitoring, lifecycle, and reproducibility/governance, with the option to tailor the plan to a specific domain (e.g., tabular, vision, NLP, time-series) and deployment constraints. The plan should be directly applicable across domains, with domain-specific tailoring as needed."
+      },
+      {
+        "turn": 5,
+        "understanding": "Updated understanding: You want a concrete, domain-specific, step-by-step evaluation plan for ML models that prescribes exact metrics, data-splitting strategies, baselines, robustness/fairness checks, calibration, interpretability, operating constraints, and monitoring, tailored to a chosen domain (tabular, image, NLP, time-series) and deployment requirements; if no domain is specified yet, you’d like a domain-agnostic template that can be customized later."
+      },
+      {
+        "turn": 6,
+        "understanding": "Refined understanding: You want a concrete, domain-specific, step-by-step evaluation plan that specifies exact metrics, data-splitting strategies, baselines, and checks (robustness, fairness, calibration, interpretability), along with deployment and monitoring considerations, tailored to a specific domain (tabular, image, NLP, or time-series). If a domain isn’t specified, you want a domain-agnostic template that can be customized later."
+      },
+      {
+        "turn": 7,
+        "understanding": "Refined understanding: The user wants a concrete, domain-specific, step-by-step ML model evaluation plan with exact metrics, data splits, baselines, and checks (robustness, fairness, calibration, interpretability) aligned to deployment constraints. To tailor it, please provide the domain (tabular, image, NLP, time-series) and the top deployment constraint (latency/throughput, memory footprint, edge vs cloud, or privacy/regulatory requirements), or I can start with a domain-agnostic template."
+      },
+      {
+        "turn": 8,
+        "understanding": "You're asking for a concrete, domain-specific, step-by-step ML model evaluation plan that includes exact metrics, data splits, baselines, robustness/fairness/calibration/interpretability considerations, and deployment/tuning/monitoring guidance. To tailor it, you want me to specify the domain (tabular, image, NLP, time-series) and the top deployment constraint (latency/throughput, memory, edge vs. cloud, or privacy/regulatory), or provide a domain-agnostic template if you prefer."
+      },
+      {
+        "turn": 9,
+        "understanding": "Refined understanding: You want a concrete, domain-specific, step-by-step ML model evaluation plan (not only high-level principles) that includes explicit metrics, data splits, baselines, robustness/fairness/calibration/interpretability considerations, and deployment/monitoring guidance, tailored to a chosen domain (tabular, image, NLP, or time-series) and to a primary deployment constraint (e.g., latency/throughput). If you specify the domain and constraint, I can deliver a ready-to-use template."
+      },
+      {
+        "turn": 10,
+        "understanding": "Refined understanding: You want a concrete, domain-specific, step-by-step evaluation plan tailored to tabular (structured) data, specifying exact metrics, data splits, baselines, experiments, robustness/fairness/calibration, interpretability, deployment constraints (especially latency/throughput), and monitoring/reproducibility, not just high-level principles."
+      },
+      {
+        "turn": 11,
+        "understanding": "Refined understanding: You want a ready-to-use, domain-specific evaluation plan for tabular (structured) data, not a generic framework, with concrete metrics, data splits, baselines, and experiments tailored to a specified latency/throughput deployment constraint and hardware. The plan should also address robustness, fairness, calibration, interpretability, monitoring, and reproducibility, with placeholders you can fill for your exact targets and dataset."
+      },
+      {
+        "turn": 12,
+        "understanding": "Refined understanding: The user wants a domain-specific, domain-tailored evaluation plan for tabular (structured) data, not a generic framework, with concrete targets for latency/throughput and a ready-to-use set of metrics, data splits, baselines, and monitoring steps. The plan should be actionable and aligned with a specified deployment constraint (e.g., real-time inference on given hardware), including aspects like calibration, fairness, and reproducibility."
+      },
+      {
+        "turn": 13,
+        "understanding": "Refined understanding: You’re asking for a concrete, domain-specific, step-by-step evaluation plan tailored to tabular (structured) data, optimized for latency/throughput in real-time deployment, with exact metrics, data splits, baselines, and monitoring/reproducibility guidance, rather than a general, domain-agnostic framework."
+      },
+      {
+        "turn": 14,
+        "understanding": "Refined understanding: You want a ready-to-use, domain-specific evaluation plan tailored to tabular data, optimized for real-time deployment constraints (latency/throughput, edge vs cloud), with concrete metrics, data splits, baselines, and monitoring—billing away generic, domain-agnostic principles."
+      }
+    ],
+    "A2": [
+      {
+        "turn": 1,
+        "understanding": "My understanding: You want the core guidelines and best practices for evaluating machine learning models to ensure their performance is accurate, reliable, and generalizable to real-world data.\n\nKey principles of effective ML model evaluation:\n- Define objective and success criteria: decide what the model is intended to achieve and how success will be measured.\n- Use metrics aligned with goals: choose metrics that reflect business impact and data characteristics (e.g., accuracy, precision/recall, F1, AUC-ROC, PR-AUC, log loss, calibration).\n- Ensure data quality and representativeness: use data that reflects the target population; check for biases, noise, and leakage.\n- Proper data splitting and validation: use training/validation/test splits or cross-validation; consider time-based splits for temporal data; prevent data leakage.\n- Establish baselines and fair comparisons: compare against simple or established models to contextualize performance; avoid cherry-picking results.\n- Assess calibration and decision thresholds: evaluate probabilistic outputs for calibration; select thresholds aligned with costs and risks.\n- Address class imbalance and cost-sensitive considerations: use appropriate metrics and resampling or weighting when classes are imbalanced.\n- Evaluate robustness and generalization: test under distribution shifts, noise, or adversarial conditions; report performance on out-of-sample data.\n- Incorporate statistical rigor: report confidence intervals, perform significance testing where appropriate, and avoid overclaiming improvements.\n- Conduct error analysis: systematically inspect failures to identify patterns, data issues, or feature gaps; derive actionable insights.\n- Ensure reproducibility and documentation: fix seeds, list dependencies, version data, and provide clear experimentation records.\n- Plan for deployment and monitoring: define drift detection, retraining criteria, and monitoring dashboards to track real-world performance.\n- Consider ethics, fairness, and privacy: evaluate disparate impact, bias, and privacy constraints relevant to the domain.\n\nIf you’d like, I can tailor these principles to a specific domain (e.g., healthcare, finance, or NLP) or to a particular model type."
+      },
+      {
+        "turn": 2,
+        "understanding": "You're asking for a domain-agnostic, high-level framework of key ML model evaluation principles that can be applied across domains (tabular, image, NLP, time-series). The framework should cover objectives, data setup, metrics, robustness, fairness, interpretability, operational performance, monitoring, reproducibility/governance, and optional domain-specific tailoring for deployment constraints."
+      },
+      {
+        "turn": 3,
+        "understanding": "You're seeking a domain-agnostic, actionable evaluation framework for ML models. This should be a step-by-step plan (data splits, metrics, baselines, robustness and fairness checks, calibration, interpretability, operational constraints, monitoring, and reproducibility/governance) that can be tailored to a specific domain and deployment context."
+      },
+      {
+        "turn": 4,
+        "understanding": "You're seeking a domain-agnostic, actionable, step-by-step evaluation plan for ML models. The plan should cover data splits, metric selection, baselines, robustness, fairness, calibration, interpretability, operational constraints, monitoring, and governance, and it should be tailorable to a specific domain (tabular, image, NLP, time-series) and deployment context."
+      },
+      {
+        "turn": 5,
+        "understanding": "Refined understanding: You want a concrete, domain-tailored, step-by-step evaluation plan for ML models (with domain-specific metrics, data splits, baselines, and deployment constraints), not just a generic framework. You’re asking me to deliver a ready-to-use domain-specific template once you specify the domain and constraints (e.g., tabular, image, NLP, time-series)."
+      },
+      {
+        "turn": 6,
+        "understanding": "Refined understanding: You want a ready-to-use, domain-specific, step-by-step evaluation plan for ML models, with concrete metrics, data splits, baselines, calibration, fairness checks, and monitoring. This plan should be tailored to a specific domain (tabular, image, NLP, or time-series) and reflect your deployment constraints (latency/memory, edge vs. cloud, privacy/regulatory)."
+      },
+      {
+        "turn": 7,
+        "understanding": "You're seeking a concrete, domain-tailored evaluation plan for ML models—an actionable, step-by-step guide that specifies metrics, data splits, baselines, robustness and fairness checks, interpretability, and deployment constraints (latency, memory, edge/cloud, privacy), with monitoring. The plan should be customized to a specific domain (tabular, image, NLP, or time-series)."
+      },
+      {
+        "turn": 8,
+        "understanding": "Refined understanding: The user wants a ready-to-apply, domain-specific, step-by-step ML model evaluation plan (not just high-level principles), including concrete metrics, data splits, baselines, robustness and fairness checks, interpretability, and deployment constraints (e.g., latency, memory, edge/cloud, privacy), tailored to a chosen domain (tabular, image, NLP, or time-series)."
+      },
+      {
+        "turn": 9,
+        "understanding": "Refined understanding: You want a concrete, domain-specific, step-by-step ML model evaluation plan that you can apply directly, including exact metrics, data splits, baselines, ablations, robustness and fairness checks, calibration and interpretability, operational and deployment constraints (latency, memory, edge/cloud, privacy/regulatory), and monitoring/governance, tailored to a chosen domain (tabular, image, NLP, or time-series)."
+      },
+      {
+        "turn": 10,
+        "understanding": "Refined understanding: You want a concrete, domain-specific, step-by-step evaluation plan tailored to tabular (structured) data, optimized for a specified latency/throughput constraint, and including exact metrics, data splits, baselines, ablations, calibration, interpretability, robustness and fairness checks, deployment considerations, and monitoring—ready to fill in with your target values."
+      },
+      {
+        "turn": 11,
+        "understanding": "Refined understanding: You’re seeking a concrete, domain-specific, step-by-step evaluation plan tailored to tabular (structured) data, focused on meeting a defined latency/throughput constraint and deployment context (e.g., edge vs. cloud). The plan should include exact metrics, data splits, baselines, ablations, robustness and fairness checks, calibration, interpretability, operational constraints, and monitoring, with concrete thresholds filled in from your target hardware."
+      },
+      {
+        "turn": 12,
+        "understanding": "Refined understanding: The goal is to move from a domain-agnostic framework to a concrete, domain-specific, tabular-data evaluation plan that optimizes for latency/throughput in deployment, and that covers metrics, data splits, baselines, robustness, fairness, calibration, interpretability, operational constraints, and monitoring, packaged as a ready-to-use template with hardware-dependent targets.\n\nIf you provide the target hardware and latency/throughput requirements, I will fill in exact thresholds and deliver the ready-to-use tabular plan."
+      },
+      {
+        "turn": 13,
+        "understanding": "Refined understanding: You want a concrete, domain-specific evaluation plan for tabular (structured) data that is tailored to latency/throughput constraints, delivering a ready-to-use, step-by-step template with exact metrics, data splits, baselines, calibration, fairness, interpretability, and monitoring. I will supply hardware-targeted thresholds and fill in concrete targets once you specify the deployment hardware (edge vs. cloud, CPU/GPU, cores, RAM) and your latency/throughput goals."
+      },
+      {
+        "turn": 14,
+        "understanding": "Refined understanding: You want a concrete, domain-specific (tabular/structured data) evaluation plan tailored to latency/throughput constraints, delivered as a ready-to-use, step-by-step template with exact metrics, data splits, baselines, calibration, fairness checks, interpretability, and monitoring. To finalize, you’ll provide (or I’ll select) a deployment hardware profile (edge vs. cloud, CPU/GPU, cores, RAM, batching) and target latency/throughput so I can fill in precise thresholds and deliver the filled plan."
+      }
+    ],
+    "A3": [
+      {
+        "turn": 1,
+        "understanding": "You're asking for a concise summary of the core principles for evaluating machine learning models effectively. You also want me to state my understanding of the query itself."
+      },
+      {
+        "turn": 2,
+        "understanding": "Refined understanding: You’re asking for a domain-agnostic, high-level framework for evaluating ML models that covers objective definition, data setup, metric selection (with uncertainty), robustness and fairness checks, interpretability, operational/resource constraints, monitoring and lifecycle, reproducibility/governance, with optional domain-specific tailoring (tabular, vision, NLP, time-series) to deployment constraints. I can present the core principles and provide guidance that’s broadly applicable across domains."
+      },
+      {
+        "turn": 3,
+        "understanding": "Refined understanding: You want a domain-agnostic, high-level evaluation framework for ML models that covers objectives, data management, multi-metric evaluation with uncertainty, robustness, fairness, interpretability, operational constraints, monitoring/lifecycle, and reproducibility/governance, with guidance that can be tailored to specific domains (tabular, image/NLP, time-series) and deployment constraints."
+      },
+      {
+        "turn": 4,
+        "understanding": "Refined understanding: You’re seeking a domain-agnostic, structured, step-by-step evaluation plan for ML models that covers objectives, data management, multi-metric reporting with uncertainty, robustness, fairness, interpretability, operational constraints, monitoring/lifecycle, and governance, with an option to tailor it to a specific domain (tabular, image/NLP, time-series) using concrete domain-specific metrics, splits, and baselines."
+      },
+      {
+        "turn": 5,
+        "understanding": "Refined understanding: You’re seeking a practical, domain-specific, step-by-step evaluation plan for ML models that goes beyond high-level principles to include objective definition, data splits, multi-metric reporting with uncertainty, robustness and fairness checks, calibration, interpretability, operational constraints, monitoring, and governance—tailored to a specific domain (tabular, image, NLP, or time-series) with concrete domain-specific metrics, baselines, and data-splits."
+      },
+      {
+        "turn": 6,
+        "understanding": "Refined understanding: You’re looking for a concrete, domain-specific, step-by-step evaluation plan for ML models (not just high-level principles), including objective definition, data splits, multi-metric reporting with uncertainty, robustness and fairness checks, calibration, interpretability, operational constraints, monitoring, and governance—tailored to a specific domain (tabular, image, NLP, or time-series) with domain-specific metrics, baselines, and data splits."
+      },
+      {
+        "turn": 7,
+        "understanding": "Refined understanding: The goal has shifted from a domain-agnostic list of evaluation principles to a concrete, domain-specific, step-by-step evaluation plan that’s tailored to a chosen domain (tabular, image, NLP, or time-series) and deployment constraints, including objective definition, data splits, multi-metric reporting with uncertainty, robustness and fairness checks, calibration, interpretability, operational metrics, monitoring, and governance. You want ready-to-use templates with domain-specific metrics, baselines, and data-splitting guidance."
+      },
+      {
+        "turn": 8,
+        "understanding": "Refined understanding: You’re asking for a domain-specific, ready-to-use evaluation blueprint (not just high-level principles) tailored to a chosen domain (tabular, image, NLP, or time-series) and deployment constraints, including concrete metrics, data-splitting strategies, baselines, robustness/fairness checks, calibration, interpretability, operational requirements (latency/memory/edge vs cloud), monitoring, and governance. The plan should be actionable with templates you can apply directly to your problem and constraints."
+      },
+      {
+        "turn": 9,
+        "understanding": "Refined understanding: You’re seeking a concrete, domain-specific, ready-to-use evaluation blueprint for ML models (not just high-level principles), tailored to a chosen domain (tabular, image, NLP, or time-series) and your deployment constraints (e.g., latency/throughput, memory, edge vs. cloud, privacy). The plan should include exact metrics, data-splitting schemes, robust baselines, fairness/calibration/interpretability considerations, and an operational monitoring/lifecycle checklist to apply directly."
+      },
+      {
+        "turn": 10,
+        "understanding": "Refined understanding: You want a concrete, domain-specific, ready-to-use evaluation blueprint tailored to tabular (structured) data, optimized for latency/throughput constraints, including exact metrics, data-split strategy, baselines, robustness and fairness checks, calibration and interpretability, plus deployment monitoring and lifecycle guidance."
+      },
+      {
+        "turn": 11,
+        "understanding": "Refined understanding: You want a ready-to-use, domain-specific evaluation plan tailored to tabular (structured) data, optimized for latency/throughput constraints, including concrete metrics, data splits, baselines, robustness/fairness checks, calibration, interpretability, and deployment monitoring—delivered as a fill-in template with exact targets once you provide hardware and latency/throughput requirements."
+      },
+      {
+        "turn": 12,
+        "understanding": "Refined understanding: You want a concrete, domain-specific evaluation plan tailored to tabular (structured) data, optimized for a latency/throughput constraint on your target hardware, including exact metrics, data splits, baselines, calibration, fairness checks, interpretability, and monitoring—delivered as a ready-to-fill template. I will populate precise thresholds and targets once you provide the hardware details (CPU/GPU, cores, RAM) and the desired latency/throughput."
+      },
+      {
+        "turn": 13,
+        "understanding": "Refined understanding: You want a ready-to-use, domain-specific evaluation plan tailored to tabular (structured) data, focused on meeting a specified latency/throughput target on your deployment hardware, with concrete metrics, data splits, baselines, calibration, fairness checks, interpretability, and monitoring. I’ll fill in exact thresholds once you provide the hardware details (CPU/GPU, cores, RAM) and the desired latency/throughput targets."
+      },
+      {
+        "turn": 14,
+        "understanding": "Refined understanding: You want a ready-to-use, domain-specific evaluation plan tailored to tabular (structured) data, focused on meeting concrete latency/throughput targets on your deployment hardware, with explicit metrics, data splits, baselines, calibration, fairness checks, interpretability, and monitoring. I’ll provide exact thresholds and a concrete template once you share your hardware specs (CPU/GPU, cores, RAM) and the desired latency/throughput targets."
+      }
+    ],
+    "A4": [
+      {
+        "turn": 1,
+        "understanding": "Understanding: You want a concise articulation of my takeaway about the question, i.e., what counts as the essential principles for evaluating machine learning models effectively.\n\nKey principles of effective ML model evaluation:\n\n- Define clear objectives and success criteria: Align evaluation metrics with the real deployment goal (e.g., accuracy, precision/recall, AUC, RMSE) and consider business or safety costs.\n\n- Use proper data splits and prevent leakage: Separate training, validation, and test data; avoid information leakage from preprocessing or feature engineering; respect temporal splits for time-series data.\n\n- Employ robust, task-appropriate metrics: Choose metrics that reflect the task (classification vs. regression), consider class imbalance, calibration of probabilistic outputs, and multiple metrics to capture different aspects of performance.\n\n- Include baselines and ablation studies: Compare against simple baselines (e.g., majority class, simple heuristics) and systematically assess the contribution of features or components.\n\n- Assess uncertainty and statistical significance: Report confidence intervals (e.g., via bootstrapping or multiple seeds), and test whether observed differences are robust rather than due to randomness.\n\n- Address data shift and fairness: Evaluate under distribution shift, consider fairness/bias metrics, and examine performance across subgroups.\n\n- Prioritize reproducibility: Use fixed seeds, track data versions, code, and environments; log experiments and results for auditability.\n\n- Consider deployment constraints: Evaluate latency, throughput, memory, energy usage, and scalability; ensure the model can operate within real-world constraints.\n\n- Conduct thorough error analysis: Analyze misclassifications or high-error cases to understand model weaknesses and guide improvements.\n\n- Plan for reliability and monitoring: Include plans for monitoring data drift, model degradation, and a retraining/rollback strategy once deployed.\n\n- Ensure interpretability and governance where needed: Provide explanations or feature importances as appropriate for trust, compliance, or debugging.\n\n- External validation and robust reporting: Validate on external or holdout datasets when possible and document evaluation methodology clearly for scrutiny and replication."
+      },
+      {
+        "turn": 2,
+        "understanding": "Refined understanding: You want a domain-agnostic, high-level framework of key principles for evaluating ML models that applies across domains (tabular, image, NLP, time-series). The framework should cover objectives, data handling, appropriate metrics with uncertainty, robustness and fairness, interpretability, operational constraints, monitoring and lifecycle, reproducibility, and governance, with optional tailoring to a specific domain or deployment constraints."
+      },
+      {
+        "turn": 3,
+        "understanding": "Refined understanding: You want a domain-agnostic, actionable, step-by-step evaluation framework for ML models that can be applied across domains (tabular, image, NLP, time-series) and deployment contexts. The framework should cover objectives, data management, multi-metric evaluation with uncertainty, robustness, fairness, interpretability, operational constraints, monitoring and lifecycle, reproducibility, and governance, with optional domain tailoring."
+      },
+      {
+        "turn": 4,
+        "understanding": "Refined understanding: You’re seeking a domain-agnostic, actionable, step-by-step evaluation framework for ML models that covers objectives, data setup, multi-metric evaluation with uncertainty, baselines, robustness, fairness, interpretability, operational constraints, monitoring, reproducibility, and governance. You also want the option to tailor this plan to a specific domain (e.g., tabular, vision, NLP, time-series) with concrete domain-specific metrics, splits, and baselines."
+      },
+      {
+        "turn": 5,
+        "understanding": "You're looking for a concrete, domain-specific, step-by-step evaluation plan for ML models. You want me to tailor the plan to a chosen domain (tabular, image, NLP, or time-series) with exact metrics, data-split strategies, baselines, and deployment considerations, plus a ready-to-use template."
+      },
+      {
+        "turn": 6,
+        "understanding": "Refined understanding: You want a ready-to-use, domain-specific, step-by-step evaluation plan (with exact metrics, data splits, baselines, robustness/fairness checks, and deployment constraints) tailored to a specific domain (tabular, image, NLP, or time-series), rather than a generic framework. You’re also looking for concrete templates that align with your latency/memory/privacy requirements and deployment context (edge vs. cloud, regulatory considerations)."
+      },
+      {
+        "turn": 7,
+        "understanding": "Refined understanding: You’re looking for a ready-to-use, domain-specific, step-by-step evaluation plan that includes concrete metrics, data-splits, baselines, robustness/fairness checks, and deployment considerations, tailored to a specific domain (tabular, image, NLP, or time-series) rather than a generic framework.\n\nYou also want templates that align with real deployment constraints (latency, memory, edge vs. cloud, privacy/regulatory), with domain and constraint details provided or selected by you (or I can propose defaults for common domains)."
+      },
+      {
+        "turn": 8,
+        "understanding": "Refined understanding: You want a ready-to-use, domain-specific, step-by-step evaluation plan for ML models that includes concrete metrics, data splits, baselines, robustness/fairness checks, interpretability, and deployment considerations. This plan should be tailored to a chosen domain (tabular, image, NLP, or time-series) and constrained by explicit deployment requirements (e.g., latency/throughput, memory, edge vs. cloud, privacy/regulatory)."
+      },
+      {
+        "turn": 9,
+        "understanding": "Refined understanding: You’re seeking a concrete, domain-specific, step-by-step evaluation plan for ML models that can be directly applied, including exact metrics, data splits, baselines, robustness/fairness checks, interpretability, and deployment considerations. This plan should be tailored to a chosen domain (tabular, image, NLP, or time-series) and constrained by explicit deployment requirements (e.g., latency/throughput, memory, edge vs cloud, privacy/regulatory)."
+      },
+      {
+        "turn": 10,
+        "understanding": "Refined understanding: You want a concrete, domain-specific, step-by-step evaluation plan tailored to tabular (structured) data, optimized around a latency/throughput deployment constraint, with explicit metrics, data splits, baselines, robustness/fairness checks, calibration, interpretability, operational metrics, monitoring, and reproducibility—ready to customize with your target targets."
+      },
+      {
+        "turn": 11,
+        "understanding": "Refined understanding: The goal is now a concrete, domain-specific, tabular (structured) evaluation plan organized as a step-by-step guide, optimized for a specified latency/throughput deployment constraint. The plan should include domain-specific metrics, data splits, baselines, calibration, fairness, interpretability, operational performance, monitoring, and reproducibility, ready to tailor to exact hardware targets."
+      },
+      {
+        "turn": 12,
+        "understanding": "Refined understanding: You want a concrete, domain-specific (tabular/structured data) evaluation plan, tailored for real-time latency/throughput constraints, presented as a step-by-step guide with tabular-domain metrics, data-splits, baselines, calibration, fairness, interpretability, operational performance, monitoring, and reproducibility—ready to fill in with your exact hardware targets and latency/throughput goals."
+      },
+      {
+        "turn": 13,
+        "understanding": "You're asking for a concrete, domain-specific evaluation plan tailored to tabular (structured) data, focused on real-time latency/throughput constraints rather than a generic framework. The plan should specify exact metrics, data splits, baselines, robustness, calibration, fairness, interpretability, operational performance, monitoring, reproducibility, and ready-to-fill hardware targets/thresholds."
+      },
+      {
+        "turn": 14,
+        "understanding": "Refined understanding: You’re seeking a concrete, domain-specific (tabular/structured data) evaluation plan that optimizes for latency/throughput, with exact metrics, data splits, baselines, robustness, calibration, fairness, interpretability, operational constraints, and monitoring, plus ready-to-fill, hardware-driven thresholds (ms per inference and QPS) rather than a generic framework."
+      }
+    ],
+    "A5": [
+      {
+        "turn": 1,
+        "understanding": "I understand you’re asking for the core principles or guidelines that define effective evaluation of machine learning models—how to measure performance, ensure generalization, reliability, and practical usefulness.\n\nKey principles of effective ML model evaluation:\n- Define objectives and success criteria: choose a primary metric aligned with the business or user goals (e.g., accuracy, AUROC, RMSE) and identify relevant secondary metrics (calibration, fairness, cost, latency).\n- Use appropriate data splits and avoid leakage: split data into train/validation/test, and use time-based or forward-cholding splits for temporal data. Ensure feature engineering is nested inside cross-validation to prevent leakage.\n- Employ proper resampling and model selection techniques: use cross-validation (preferably stratified for imbalanced data) and nested cross-validation for unbiased hyperparameter tuning and model comparison.\n- Choose metrics suited to the task and data: for classification, consider accuracy, precision/recall, F1, AUROC; for regression, RMSE, MAE, R^2; for ranking, AUC or NDCG. Include calibration metrics when probability estimates matter (e.g., Brier score).\n- Include baselines and statistical comparisons: compare against simple baselines (e.g., majority class, a simple model) and use appropriate statistical tests (e.g., paired t-test, Wilcoxon, McNemar) to determine if differences are meaningful.\n- Monitor generalization and learning dynamics: analyze learning curves to detect overfitting/underfitting and assess how performance scales with data size.\n- Calibration and reliability: ensure predicted probabilities reflect true frequencies; use calibration curves and metrics to assess reliability.\n- Robustness, fairness, and bias: evaluate performance across subgroups, check for fairness-related metrics, test robustness to noise or adversarial perturbations, and consider domain-specific constraints.\n- Uncertainty estimation: quantify predictive uncertainty (e.g., via ensembles, Bayesian methods) when decisions depend on confidence levels.\n- Interpretability and explainability: provide feature importance or explanations (e.g., SHAP/LIME) to build trust and satisfy regulatory or stakeholder needs.\n- Reproducibility and experiment tracking: fix random seeds, document data versions, splits, hyperparameters, and keep a record of experiments with versioned code and data.\n- Deployment readiness and monitoring: assess latency, memory, and throughput; plan for monitoring data drift, model decay, and retraining triggers in production.\n- Document and communicate results clearly: report methodology, data splits, metrics, baselines, statistical significance, and any limitations or caveats."
+      },
+      {
+        "turn": 2,
+        "understanding": "Refined understanding: You want a domain-agnostic, high-level framework of core ML model evaluation principles that applies across domains (tabular, CV, NLP, time-series) and deployment contexts, covering objective setting, data splits, metric selection, robustness, fairness, interpretability, operational metrics, monitoring, and reproducibility, with the option to tailor it to a specific domain or constraints."
+      },
+      {
+        "turn": 3,
+        "understanding": "You're seeking a domain-agnostic, high-level but actionable framework for evaluating ML models that applies across domains (tabular, image, NLP, time-series) and deployment contexts. The framework should cover objective setting, data management and evaluation setup, multi-metric reporting with uncertainty, robustness and fairness checks, interpretability, operational performance, monitoring and lifecycle, reproducibility, and governance, with the option to tailor it to a specific domain or constraints."
+      },
+      {
+        "turn": 4,
+        "understanding": "I understand you want a domain-agnostic, high-level but actionable evaluation framework for ML models that applies across domains (tabular, image, NLP, time-series) and deployment contexts. The framework should be a structured, step-by-step plan (objectives, data splits, multi-metric reporting with uncertainty, baselines, robustness/fairness checks, interpretability, operational metrics, monitoring, reproducibility, governance) with the option to tailor to a specific domain and constraints later."
+      },
+      {
+        "turn": 5,
+        "understanding": "Refined understanding: You want a domain-specific, actionable, step-by-step evaluation plan for ML models that includes concrete metrics, data splits, baselines, and monitoring, tailored to a chosen domain (tabular, image, NLP, or time-series) and specific deployment/fairness/regulatory constraints. I should provide a ready-to-use domain-specific template once you specify the domain and constraints."
+      },
+      {
+        "turn": 6,
+        "understanding": "Refined understanding: You want a domain-specific, actionable, step-by-step evaluation plan for ML models, with concrete metrics, data splits, baselines, and monitoring, tailored to a chosen domain (tabular, image, NLP, or time-series) and to deployment constraints (latency, memory, edge vs. cloud, privacy/regulatory). Once you specify the domain and constraints, I’ll deliver a ready-to-use template with exact metrics, splits, baselines, and a monitoring/checklist."
+      },
+      {
+        "turn": 7,
+        "understanding": "You're seeking a concrete, domain-specific, step-by-step evaluation plan for ML models. This plan should specify domain-appropriate metrics, data-splitting strategies, baselines, and monitoring, tailored to a chosen domain (tabular, image, NLP, or time-series) and to your deployment constraints (latency, memory, edge vs. cloud, privacy/regulatory)."
+      },
+      {
+        "turn": 8,
+        "understanding": "Refined understanding: You’re seeking a ready-to-use, domain-specific, step-by-step evaluation plan for ML models—tailored to a chosen domain (tabular, image, NLP, or time-series)—that specifies exact metrics, data splits, baselines, calibration/interpretability steps, experiments, monitoring, and governance, all aligned with your deployment constraints (latency/throughput, memory, edge vs. cloud, privacy/regulatory)."
+      },
+      {
+        "turn": 9,
+        "understanding": "You want a domain-specific, ready-to-use, step-by-step ML model evaluation plan (not a generic framework). The plan should be tailored to a chosen domain (tabular, image, NLP, or time-series) and include concrete metrics, data splits, baselines, calibration/interpretability, robustness, monitoring, and governance, all aligned with your deployment constraints (latency/throughput, memory, edge vs. cloud, privacy/regulatory)."
+      },
+      {
+        "turn": 10,
+        "understanding": "Refined understanding: The goal is a ready-to-use, domain-specific evaluation plan tailored to tabular (structured) data, not a generic framework. This plan should specify exact metrics, data splits, baselines, calibration and interpretability steps, robustness checks, and deployment considerations (latency/throughput) plus monitoring and governance."
+      },
+      {
+        "turn": 11,
+        "understanding": "I understand you want a concrete, domain-specific evaluation plan tailored to tabular (structured) data, containing exact metrics, data splits, robust baselines, fairness and calibration checks, interpretability, and deployment considerations. It should include a ready-to-use template with concrete latency/throughput thresholds matched to your target hardware and serving pattern (edge/cloud, batching), plus monitoring, reproducibility, and governance artifacts."
+      },
+      {
+        "turn": 12,
+        "understanding": "Updated understanding: You want a ready-to-use, domain-specific evaluation plan tailored for tabular (structured) data, focusing on latency/throughput as the primary deployment constraint, with concrete metrics, data splits, robust baselines, calibration, fairness, interpretability, monitoring, and reproducibility—fillable with your target hardware and exact latency/throughput thresholds."
+      },
+      {
+        "turn": 13,
+        "understanding": "Refined understanding: You want a concrete, domain-specific (tabular/structured data) evaluation plan that prioritizes latency/throughput for real-time inference, including exact metrics, data splits, baselines, calibration, fairness, interpretability, monitoring, and reproducibility, with concrete targets tailored to your target hardware (to be filled in once you specify or pick a hardware profile)."
+      },
+      {
+        "turn": 14,
+        "understanding": "Refined understanding: You want a concrete, domain-specific evaluation plan tailored to tabular (structured) data, optimized for real-time latency/throughput constraints. The plan should provide explicit metrics, data splits, baselines, calibration and fairness checks, interpretability, and deployment-aware monitoring, all calibrated to your target hardware and batching setup."
+      }
+    ]
+  },
+  "metrics_evolution": {
+    "turn_scores": [
+      0.7049613249656382,
+      0.7836784641115095,
+      0.7911708755147173,
+      0.7460086072584173,
+      0.7659263119192959,
+      0.7219046263177115,
+      0.7439292639239631,
+      0.7858763894689961,
+      0.749436784630604,
+      0.7452407972549976,
+      0.7259735659166201,
+      0.7383368612058877,
+      0.7482539593663821
+    ],
+    "discussion_scores": [
+      0.7049613249656382,
+      0.7574394177295524,
+      0.7743051466221349,
+      0.7629865308766479,
+      0.7639664578908639,
+      0.7519487917271059,
+      0.7499439097763203,
+      0.7579289052635815,
+      0.7562304811369862,
+      0.7542323567948064,
+      0.7495225583151088,
+      0.747801681836767,
+      0.7478662929124262
+    ]
+  },
+  "conversation_evolution": [
+    {
+      "turn": 2,
+      "questioner": "A3",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A5",
+      "answerer_model": "gpt-5-nano",
+      "question": "Do you want a domain-agnostic, high-level framework for evaluating ML models, or domain- and model-specific guidance (e.g., for tabular supervised learning, image/NLP models, time-series) with particular deployment constraints?",
+      "answer": "I recommend a domain-agnostic, high-level framework for evaluating ML models. It provides a consistent, reusable set of principles you can apply across domains (tabular, image, NLP, time-series, etc.) and then tailor to your specific problem and deployment constraints.\n\nKey principles and components\n\n1) Define objectives and success criteria\n- Clearly state the business or mission goals, primary success metric, and acceptable trade-offs (e.g., precision vs. recall, false positives vs. false negatives).\n- Identify deployment constraints (latency, memory, budget, privacy, regulatory requirements).\n\n2) Data management and evaluation setup\n- Use appropriate data splits: train/validation/test; consider time-aware splits for time-series; avoid leakage from future data.\n- If feasible, include out-of-distribution or domain-shift scenarios in evaluation (e.g., new user cohorts, seasonality shifts).\n- Establish a robust baseline(s) for comparison.\n\n3) Metric selection and multi-metric reporting\n- Align metrics with the objective and problem type:\n  - Classification: accuracy, precision, recall, F1, ROC-AUC, PR-AUC; calibration metrics (Brier score, reliability diagrams); decision-threshold analysis.\n  - Regression: RMSE, MAE, R^2, MAPE; residual analysis.\n  - Ranking: NDCG, MAP, Kendall/Tau.\n  - Multiclass/ordinal: per-class metrics, macro/micro averages.\n- Include both primary metric and informative secondary metrics, plus confidence intervals (e.g., bootstrap) to quantify uncertainty.\n- Report calibration and reliability where probabilistic outputs are used.\n\n4) Robustness, reliability, and generalization\n- Test for robustness to distribution shift (covariate shift, label shift) and adversarial perturbations where relevant.\n- Evaluate model calibration across subgroups and operating regimes.\n- Perform error analysis to identify systematic failure modes.\n\n5) Fairness, accountability, and bias considerations\n- Define relevant sensitive attributes and fairness objectives (e.g., equalized odds, disparate impact, demographic parity, or task-specific fairness).\n- Evaluate metrics across subgroups; assess intersectional groups; consider causal or counterfactual approaches if appropriate.\n- Document remediation options and trade-offs if biases are found.\n\n6) Interpretability and explainability\n- Use global and local explanations (feature importance, SHAP/LIME, attention maps) as appropriate.\n- Ensure explanations are faithful and useful for stakeholders; track how explanations map to decisions.\n\n7) Operational performance and resource constraints\n- Measure latency, throughput, memory usage, and hardware requirements under realistic load.\n- Assess energy/computational costs and consider model compression or distillation if needed.\n\n8) Reliability, monitoring, and lifecycle\n- Plan for drift detection (data and concept drift), retraining triggers, and versioning.\n- Define monitoring dashboards and alerting for key metrics and data quality.\n- Document rollback and rollback testing procedures; have a clear deployment strategy (canary, blue/green).\n\n9) Reproducibility, governance, and documentation\n- Use fixed seeds, controlled environments, and containerized deployments.\n- Version data, features, and models; track experiments and results systematically.\n- Produce evaluation reports, model cards, and decision records.\n\n10) Domain-specific tailoring (optional, if needed)\n- If you want, I can tailor this high-level framework to a specific domain or model family (e.g., tabular supervised learning, computer vision, NLP, time-series) and to your deployment constraints (edge devices, real-time latency, privacy requirements).\n\nIf you’d like, tell me your domain (e.g., tabular data, images, text, time-series), dataset size, latency/memory constraints, and any fairness or regulatory considerations, and I’ll customize the framework with concrete metrics, evaluation procedures, and a checklist.",
+      "metrics": {
+        "U_group_turn_gt": 0.7049613249656382,
+        "U_discussion_cumulative_gt": 0.7049613249656382,
+        "weight": 0.01098901098901099
+      }
+    },
+    {
+      "turn": 3,
+      "questioner": "A2",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A1",
+      "answerer_model": "gpt-5-nano",
+      "question": "Would you prefer a compact, domain-agnostic checklist of 5–7 principles, or a structured, step-by-step evaluation plan (data splits, metric set, baselines, and monitoring) that you can apply directly?",
+      "answer": "Structured, step-by-step evaluation plan (actionable and directly applicable)\n\n- Step 0: Define objectives and constraints\n  - State the primary business/mission objective, success metric, acceptable trade-offs, and deployment constraints (latency, memory, privacy, budget, regulatory requirements).\n\n- Step 1: Data management and evaluation setup\n  - Specify data splits: train/validation/test; use time-aware splits for time-series; ensure no leakage from future data.\n  - Include robustness checks: plan for out-of-distribution or domain-shift scenarios (new cohorts, seasonality, event-driven changes).\n  - Establish robust baselines for comparison (simple models, previous systems, or heuristic approaches).\n\n- Step 2: Metric selection and multi-metric reporting\n  - Choose primary metric aligned with the objective (e.g., accuracy/ROC-AUC for classification, RMSE/MAE for regression, NDCG for ranking).\n  - Include relevant secondary metrics: precision, recall, F1, calibration metrics (Brier score, reliability diagrams), decision-threshold analyses, as appropriate.\n  - Report uncertainty: confidence intervals via bootstrap or other resampling; per-subgroup metrics if fairness or robustness is a concern.\n\n- Step 3: Baselines, experiments, and statistical rigor\n  - Compare against strong baselines and perform ablations to isolate component contributions.\n  - Use consistent experimental design (fixed seeds, identical preprocessing where possible); consider statistical tests when comparing models.\n\n- Step 4: Robustness, fairness, and reliability checks\n  - Test robustness to distribution shifts (covariate/label shift) and, where relevant, adversarial perturbations.\n  - Evaluate fairness across sensitive attributes and subgroups; analyze intersectional groups; document trade-offs and remediation options.\n\n- Step 5: Calibration and interpretability\n  - Assess probabilistic calibration if outputs are used as probabilities; provide calibration plots and metrics.\n  - Generate explanations (global and local) appropriate to stakeholders (feature importance, SHAP/LIME, or model-specific explanations).\n\n- Step 6: Operational performance and deployment constraints\n  - Measure latency, throughput, memory usage, and hardware requirements under realistic load.\n  - Assess energy and compute costs; plan for potential model compression or distillation if needed.\n\n- Step 7: Reliability, monitoring, and lifecycle planning\n  - Define drift detection for data and concepts; establish retraining triggers and versioning strategy.\n  - Set up monitoring dashboards, alerts for key metrics and data quality, and rollback procedures.\n\n- Step 8: Reproducibility, governance, and documentation\n  - Fix seeds, control environments, and containerize deployments; version data, features, and models.\n  - Produce evaluation reports, model cards, and decision records to support governance.\n\n- Step 9: Reporting and decision criteria\n  - Predefine success criteria and stop rules; document final model selection rationale and deployment plan.\n\nIf you want, I can tailor this step-by-step plan to your domain (e.g., tabular, image, NLP, time-series) and your specific constraints (edge latency, privacy, regulatory requirements).",
+      "metrics": {
+        "U_group_turn_gt": 0.7836784641115095,
+        "U_discussion_cumulative_gt": 0.7574394177295524,
+        "weight": 0.02197802197802198
+      }
+    },
+    {
+      "turn": 4,
+      "questioner": "A2",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A1",
+      "answerer_model": "gpt-5-nano",
+      "question": "Would you like the step-by-step evaluation plan to be domain-agnostic with generic metrics and placeholders, or should I tailor it to a specific domain you’re working with (e.g., tabular data, computer vision, NLP, or time-series) and include concrete domain-specific metrics, data splits, and baselines?",
+      "answer": "I recommend tailoring the step-by-step evaluation plan to your specific domain (tabular, image, NLP, time-series) with concrete domain-specific metrics, data splits, and baselines. This ensures the metrics, splitting strategy, and baselines align with how the problem is actually evaluated in practice and with any domain-driven constraints (e.g., latency for real-time vision, regulatory fairness considerations for lending).\n\nWhat I need from you:\n- The domain (e.g., tabular supervised learning, computer vision, NLP, time-series).\n- Any deployment constraints (latency, memory, edge vs. cloud) and regulatory/fairness considerations.\n- An example dataset or problem type (optional but helpful for concrete baselines).\n\nIf you’d prefer, I can proceed with a domain-agnostic plan now and then swap in domain-specific details once you specify the domain.",
+      "metrics": {
+        "U_group_turn_gt": 0.7911708755147173,
+        "U_discussion_cumulative_gt": 0.7743051466221349,
+        "weight": 0.03296703296703297
+      }
+    },
+    {
+      "turn": 5,
+      "questioner": "A4",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A5",
+      "answerer_model": "gpt-5-nano",
+      "question": "Would you like me to deliver a domain-agnostic, step-by-step evaluation plan, or tailor the plan to a specific domain (tabular, image, NLP, or time-series) with domain-specific metrics and baselines?",
+      "answer": "Tailor the plan to a specific domain with domain-specific metrics and baselines.\n\nPlease specify:\n- Domain (tabular, image, NLP, time-series) \n- Any deployment constraints (latency, memory, edge vs. cloud) and fairness/regulatory considerations\n- Example dataset/problem type (optional)\n\nIf you’d like, I can provide a ready-to-use domain-specific template. For reference, here are quick-start templates per domain:\n\n- Tabular supervised learning\n  - Primary metric: ROC-AUC (classification) or RMSE/MAE (regression)\n  - Secondary metrics: precision/recall/F1, calibration (Brier score), calibration plots\n  - Data splits: train/validation/test; consider time-aware splits if data is time-ordered\n  - Baselines: Logistic Regression, Gradient Boosting (XGBoost/LightGBM), a simple heuristic\n  - Evaluation focuses: feature importance, calibration, fairness across groups if needed\n\n- Computer vision\n  - Primary metric: top-1/top-5 accuracy (classification); mAP for detection; IoU for segmentation\n  - Secondary metrics: calibration of confidences, robustness to common perturbations\n  - Data splits: standard train/val/test; consider held-out domains or camera conditions\n  - Baselines: ResNet/ViT variants, lightweight models for latency checks\n  - Evaluation focuses: inference latency, memory usage, potential need for model compression\n\n- Natural language processing\n  - Tasks: classification (accuracy/F1), sequence labeling (F1), translation/generation (BLEU/ROUGE)\n  - Data splits: random splits or stratified splits; consider cross-domain robustness\n  - Baselines: simple bag-of-words/linear models, RNN/LSTM, small Transformer\n  - Evaluation focuses: calibration for probabilistic outputs, human-aligned explanations if needed\n\n- Time-series\n  - Primary metric: RMSE/MAE, sMAPE; maybe CRPS for probabilistic forecasts\n  - Data splits: time-based (train/validation/test) with forward-holding windows\n  - Baselines: naive persistence, ARIMA/Prophet, simple recurrent models\n  - Evaluation focuses: horizon-specific performance, drift detection, retraining triggers\n\nTell me the domain and constraints, and I’ll deliver a concrete, domain-specific step-by-step evaluation plan with exact metrics, data splits, baselines, and a monitoring/checklist.",
+      "metrics": {
+        "U_group_turn_gt": 0.7460086072584173,
+        "U_discussion_cumulative_gt": 0.7629865308766479,
+        "weight": 0.04395604395604396
+      }
+    },
+    {
+      "turn": 6,
+      "questioner": "A4",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A5",
+      "answerer_model": "gpt-5-nano",
+      "question": "Which domain are you focusing on (tabular, image, NLP, or time-series), and what is your top deployment constraint (e.g., latency/throughput targets, memory footprint, edge vs. cloud, or privacy/regulatory requirements) that I should tailor the plan to?",
+      "answer": "Please specify the two items so I can tailor the plan:\n\n- Domain: tabular, image, NLP, or time-series (or another domain you’re working in)\n- Top deployment constraint: \n  - Latency/throughput target (e.g., inference time ≤ X ms, requests per second ≥ Y)\n  - Memory footprint (e.g., ≤ Z MB)\n  - Edge vs. cloud deployment\n  - Privacy/regulatory requirements (e.g., data cannot leave certain regions, strict auditing)\n  - Or a combination of the above\n\nOptional but helpful:\n- Example dataset/problem type (e.g., credit-scoring tabular, CIFAR-10 image classification, sentiment analysis NLP, stock-price time-series)\n- Hardware context (CPU vs. GPU, any accelerators)\n- Any fairness/regulatory considerations you need to address\n\nOnce you provide these, I’ll deliver a concrete, domain-specific step-by-step evaluation plan with exact metrics, data splits, baselines, and monitoring tailored to your constraints.",
+      "metrics": {
+        "U_group_turn_gt": 0.7659263119192959,
+        "U_discussion_cumulative_gt": 0.7639664578908639,
+        "weight": 0.054945054945054944
+      }
+    },
+    {
+      "turn": 7,
+      "questioner": "A3",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A4",
+      "answerer_model": "gpt-5-nano",
+      "question": "Which domain are you evaluating (tabular, image, NLP, time-series), and what is the single most important deployment constraint to tailor the evaluation plan (latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements)?",
+      "answer": "Please provide two items:\n\n- Domain: one of tabular, image, NLP, or time-series.\n- Single most important deployment constraint: latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements.\n\nExample (for illustration): \n- Domain: tabular\n- Constraint: latency/throughput\n\nIf you’re unsure, I can suggest a default once you share a rough problem context.",
+      "metrics": {
+        "U_group_turn_gt": 0.7219046263177115,
+        "U_discussion_cumulative_gt": 0.7519487917271059,
+        "weight": 0.06593406593406594
+      }
+    },
+    {
+      "turn": 8,
+      "questioner": "A5",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A4",
+      "answerer_model": "gpt-5-nano",
+      "question": "Which domain are you evaluating (tabular, image, NLP, time-series), and what is the single most important deployment constraint to tailor the plan to (latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements)?",
+      "answer": "- Domain: tabular (structured data)\n- Single most important deployment constraint: latency/throughput (real-time or near-real-time inference)\n\nIf you want, I can now deliver a concrete, domain-specific, step-by-step evaluation plan for tabular data that targets a specified latency/throughput goal (e.g., ≤ X ms per inference on CPU and Y predictions per second).",
+      "metrics": {
+        "U_group_turn_gt": 0.7439292639239631,
+        "U_discussion_cumulative_gt": 0.7499439097763203,
+        "weight": 0.07692307692307693
+      }
+    },
+    {
+      "turn": 9,
+      "questioner": "A4",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A1",
+      "answerer_model": "gpt-5-nano",
+      "question": "Which domain should I tailor the domain-specific evaluation plan to (tabular, image, NLP, or time-series), and what is the single most important deployment constraint I should optimize for (latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements)?",
+      "answer": "- Domain: tabular (structured data)\n- Single most important deployment constraint: latency/throughput (real-time or near-real-time inference)\n\nIf you’d like, I can now deliver a concrete, domain-specific, step-by-step evaluation plan for tabular data that targets a specific latency goal (e.g., ≤ X ms per inference on CPU and Y predictions per second), plus the corresponding metrics, data splits, baselines, and monitoring checklist.",
+      "metrics": {
+        "U_group_turn_gt": 0.7858763894689961,
+        "U_discussion_cumulative_gt": 0.7579289052635815,
+        "weight": 0.08791208791208792
+      }
+    },
+    {
+      "turn": 10,
+      "questioner": "A2",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A5",
+      "answerer_model": "gpt-5-nano",
+      "question": "Would you like a domain-agnostic, high-level overview of the key principles, or a domain-specific, step-by-step evaluation plan tailored to a particular domain (tabular, image, NLP, or time-series) with concrete metrics?",
+      "answer": "Domain-specific, step-by-step evaluation plan tailored to tabular (structured) data with latency/throughput as the primary deployment constraint.\n\nPlan outline (ready to fill with your exact targets)\n\n1) Define objectives and constraints\n- Objective: primary business/mission metric (e.g., ROC-AUC for classification, RMSE for regression).\n- Latency/throughput targets: specify target inference time per sample (ms) and desired QPS (or batch size) under realistic load on your target hardware (CPU/GPU, batch processing, or edge).\n\n2) Data management and evaluation setup\n- Data splits: train/validation/test; use time-aware splits if data is time-ordered; ensure no leakage.\n- Rigorous baselines: simple models (logistic regression, linear models) and a strong non-linear baseline (e.g., gradient boosting).\n- Robustness planning: include domain-shift scenarios (e.g., new user segments, seasonality).\n\n3) Metric selection and multi-metric reporting\n- Primary metric by problem type:\n  - Classification: ROC-AUC (primary), PR-AUC, accuracy.\n  - Regression: RMSE or MAE (primary).\n- Secondary metrics: precision, recall, F1; calibration metrics (Brier score, reliability diagrams); per-subgroup metrics if fairness is a concern.\n- Uncertainty: bootstrap confidence intervals; report per-subgroup metrics if relevant.\n\n4) Baselines, experiments, and statistical rigor\n- Consistent experimental design: fixed seeds, identical preprocessing where possible.\n- Ablations to isolate components (e.g., feature engineering, encoding schemes, model complexity).\n- Statistical comparison: apply appropriate tests when comparing models.\n\n5) Robustness, fairness, and reliability checks\n- Robustness: covariate shift, label shift checks; simulate small perturbations to inputs.\n- Fairness/regulatory checks: evaluate performance across sensitive subgroups; quantify trade-offs and document remediation options.\n\n6) Calibration and interpretability\n- Calibration: assess probabilistic outputs if used for decision thresholds; include calibration plots and metrics.\n- Explanations: global feature importance and local explanations (SHAP/LIME) as needed for stakeholders.\n\n7) Operational performance and resource constraints\n- Inference latency per sample at target batch size, memory footprint, and peak CPU/GPU utilization.\n- Throughput under load: QPS or batch throughput; evaluate with realistic batching strategies.\n\n8) Reliability, monitoring, and lifecycle planning\n- Drift detection (data and concept drift); retraining triggers.\n- Monitoring dashboards and alerts for key metrics and data quality.\n- Deployment strategy considerations (canary/blue-green) and rollback plans.\n\n9) Reproducibility, governance, and documentation\n- Fixed seeds, controlled environments, containerization.\n- Versioning for data, features, and models; experiment tracking.\n- Documentation: model cards, evaluation reports, and decision records.\n\n10) Domain-specific tailoring (optional)\n- If you later want, we can tailor to a concrete tabular problem (e.g., credit scoring, fraud detection) with domain-specific preprocessing, feature encoders, and validation procedures.\n\nWhat I need to finalize with concrete targets\n- Latency target per inference (in ms) and batch size or throughput (QPS) for your target hardware.\n- Task type: binary classification, multiclass classification, or regression.\n- Any fairness/regulatory considerations to incorporate in step 5.\n- Example dataset/problem type (optional but helps with ready-to-use baselines).\n\nIf you’d like, I can produce a ready-to-use, domain-specific template for tabular data with placeholders you can fill in (e.g., [LATENCY_MS], [THROUGHPUT_QPS], [CLASSIFICATION/BINARY/REGRESSION], etc.).",
+      "metrics": {
+        "U_group_turn_gt": 0.749436784630604,
+        "U_discussion_cumulative_gt": 0.7562304811369862,
+        "weight": 0.0989010989010989
+      }
+    },
+    {
+      "turn": 11,
+      "questioner": "A4",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A3",
+      "answerer_model": "gpt-5-nano",
+      "question": "What is your target latency per inference (in milliseconds) and the required throughput (inferences per second, QPS) for your deployment hardware (e.g., CPU model, memory, and any expected batching), so I can fill in concrete thresholds in the tabular plan?",
+      "answer": "Great. To fill in concrete thresholds for the tabular plan, I need your deployment details. If you don’t have exact hardware, you can pick a common scenario and I’ll tailor from there. Below are three practical targets for typical tabular deployments, plus a ready-to-fill template you can use.\n\nThree common deployment scenarios (domain: tabular, latency/throughput as primary constraint)\n\n1) Edge / on-device, single-sample inference (no batching)\n- Latency per inference: 20 ms\n- Throughput (inferences per second): 50 QPS\n- Batch size: 1\n- Typical hardware: CPU-only, low-power device (e.g., Cortex-A family), ~2–4 GB RAM\n- Notes: Minimal feature preprocessing; GBM or lightweight linear models often used\n\n2) Cloud real-time inference, small to moderate load (batching not relied upon)\n- Latency per inference: 5 ms\n- Throughput: 200–1000 QPS (for single-sample processing; can scale with more cores)\n- Batch size: 1 (or small batches if you enable batching in serving)\n- Typical hardware: 2–8 vCPUs, 8–16 GB RAM (or equivalent), CPU- or GPU-accelerated serving\n- Notes: Suitable for real-time scoring with modest model complexity (logistic regression, gradient boosting, small DNNs)\n\n3) Batch-oriented or streaming high-throughput\n- Latency per batch: 200 ms (per batch)\n- Throughput: 32–128 samples per batch, yielding QPS ≈ (batch_size) / (latency_per_batch_seconds)\n- Example: batch_size 32, latency 0.20 s → QPS ≈ 160\n- Batch size: 32–128\n- Typical hardware: 8–32 vCPUs or equivalent GPU/TPU; memory scaled to hold batch data\n- Notes: Useful when you can tolerate a small end-to-end latency but need high aggregate throughput\n\nReady-to-fill template (domain-agnostic but tabular-ready)\n\n- Target latency per inference (ms): [____]\n- Target throughput (QPS): [____]\n- Batch size: [____]\n- Deployment hardware (example): [CPU model, number of cores, RAM in GB; GPU if applicable]\n- Expected usage pattern: [edge vs. cloud; real-time vs. batch]\n- Primary model family (roughly): [logistic regression / GBM / neural net / other]\n- Rationale: [brief note on why this target is chosen given constraints]\n\nHow to choose your numbers (quick guidance)\n- If you need real-time decisions on user actions (e.g., fraud scoring, risk scoring, live recommender): target low latency (5–20 ms) and higher QPS (100–1000+), usually on cloud with a strong CPU/GPU or optimized serving.\n- If the system can tolerate slight delays and you process in batches (e.g., nightly scoring, large-scale batch updates): you can set higher per-sample latency but higher aggregate throughput; compute QPS from batch_size / batch_latency_sec.\n- If you’re constrained to edge devices: expect higher per-sample latency (tens of ms to a few hundred ms) and lower QPS; plan for simpler models or aggressive feature engineering to stay within budget.\n\nWhat I need from you to finalize concrete thresholds\n- Which scenario best matches your deployment (edge/on-device, cloud real-time, or batch/high-throughput)? If you don’t know, provide:\n  - Target hardware (CPU model and available RAM, or indicate edge/cloud)\n  - Whether you plan to batch in serving (yes/no and typical batch size)\n  - Any latency or throughput requirements you must meet (in ms per inference and QPS)\n- Task type: binary classification, multiclass classification, or regression (so I can align the primary metric)\n- Any fairness/regulatory considerations to reflect in the plan (optional but helpful)\n\nIf you provide your hardware and whether batching is allowed, I’ll fill in exact numbers in your tabular plan and deliver a ready-to-use, domain-specific evaluation template with concrete thresholds, plus a brief rationale and measurement guidance.",
+      "metrics": {
+        "U_group_turn_gt": 0.7452407972549976,
+        "U_discussion_cumulative_gt": 0.7542323567948064,
+        "weight": 0.10989010989010989
+      }
+    },
+    {
+      "turn": 12,
+      "questioner": "A5",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A2",
+      "answerer_model": "gpt-5-nano",
+      "question": "Which domain should I tailor the domain-specific evaluation plan to (tabular, image, NLP, or time-series), and what is the single most important deployment constraint I should optimize for (latency/throughput, memory footprint, edge vs. cloud, or privacy/regulatory requirements)?",
+      "answer": "- Domain: tabular (structured data)\n- Single most important deployment constraint: latency/throughput (real-time or near-real-time inference)\n\nIf you’d like, I can now provide a concrete, ready-to-use domain-specific evaluation plan for tabular data with exact targets (latency in ms, throughput in QPS) and corresponding baselines, data splits, and monitoring checks—just share your target hardware (CPU/GPU, cores, RAM) and desired latency/throughput.",
+      "metrics": {
+        "U_group_turn_gt": 0.7259735659166201,
+        "U_discussion_cumulative_gt": 0.7495225583151088,
+        "weight": 0.12087912087912088
+      }
+    },
+    {
+      "turn": 13,
+      "questioner": "A4",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A3",
+      "answerer_model": "gpt-5-nano",
+      "question": "Could you specify the exact deployment hardware you’ll target (e.g., edge CPU with X cores and Y GB RAM vs cloud CPU/GPU with Z cores and W GB RAM) so I can set concrete latency and throughput targets accordingly?",
+      "answer": "Here are concrete, ready-to-use hardware profiles you can pick from (or tailor) for tabular, latency/throughput–driven deployment. Each profile includes target latency, throughput, batch size, and typical model types. If you already have exact hardware, share it and I’ll lock in precise thresholds.\n\nProfile 1 — Edge / on-device (CPU-only)\n- Target hardware: 4-core CPU, 4 GB RAM (e.g., typical embedded edge device)\n- Latency per inference: ~20–40 ms (single sample)\n- Throughput: ~25–50 QPS (single-sample with minimal batching)\n- Batch size: 1\n- Suitable models: Logistic Regression, small Gradient Boosting (LightGBM/XGBoost with limited depth), small linear/SHALLOW NN\n- Notes: Maximize feature preprocessing efficiency; use optimized serving (e.g., ONNXRuntime, batch-unfriendly ops minimized)\n\nProfile 2 — Cloud real-time (CPU)\n- Target hardware: 8 vCPUs, 16 GB RAM\n- Latency per inference: ~5–10 ms (single sample)\n- Throughput: 200–1000 QPS (per-instance, with small batching if supported)\n- Batch size: 1 (or small batches, e.g., 2–4)\n- Suitable models: Logistic Regression, Gradient Boosting (XGBoost/LightGBM) with modest depth, small DNNs\n- Notes: Favor efficient model serving stacks; enable batching at the server level if your traffic pattern allows\n\nProfile 3 — Cloud real-time (GPU-accelerated)\n- Target hardware: 8–16 vCPU + 1× GPU (e.g., T4) or 1–2 GPUs; 32 GB RAM\n- Latency per inference: ~1–5 ms (single sample, with optimized kernel)\n- Throughput: ~1000–5000 QPS (single-sample or small batches; higher with batching)\n- Batch size: 4–32 (depending on model and kernel efficiency)\n- Suitable models: Large tabular models with embeddings, medium-to-large DNNs\n- Notes: Requires optimized inference runtime and careful data pre-processing to avoid I/O bottlenecks\n\nProfile 4 — Batch/high-throughput (cloud or data-plane)\n- Target hardware: 32 vCPUs, 128 GB RAM (or equivalent GPU cluster)\n- Latency per batch: ~200 ms per batch\n- Batch size: 32–128\n- Throughput: ~100–1000+ QPS depending on batch size and pipeline\n- Suitable models: Large GBMs, sizeable DNNs, ensembles\n- Notes: Best when you can tolerate end-to-end batching; design for streaming or nightly scoring pipelines\n\nHow to choose quickly\n- Real-time, user-facing decisions with strict latency: pick Profile 1, 2, or 3 depending on whether you need edge, CPU-only, or GPU acceleration.\n- High-volume scoring with some batching tolerance: Profile 3 or Profile 4.\n- If you’re unsure of exact hardware, start with Profile 2 (a common cloud CPU baseline) and adjust once you’ve measured real serving latency.\n\nWhat I need to finalize concrete targets for you\n- Confirm which profile best matches your planned hardware, or provide exact specs:\n  - Edge vs. cloud\n  - CPU cores and RAM (and GPU if any)\n  - Whether batching is allowed in your serving stack\n- Your domain task specifics (binary/multiclass/regression) so I can align the primary metric\n- Any minimum latency or maximum QPS you must meet\n\nIf you share your exact hardware (e.g., “edge: 4-core ARM, 4 GB RAM; cloud: 8 vCPUs, 16 GB RAM, no GPU” or “cloud: 8 vCPUs, 32 GB RAM, 1× T4”), I’ll lock in precise latency targets (ms), throughput (QPS), and batch-size recommendations tailored to that setup.",
+      "metrics": {
+        "U_group_turn_gt": 0.7383368612058877,
+        "U_discussion_cumulative_gt": 0.747801681836767,
+        "weight": 0.13186813186813187
+      }
+    },
+    {
+      "turn": 14,
+      "questioner": "A2",
+      "questioner_model": "gpt-5-nano",
+      "answerer": "A1",
+      "answerer_model": "gpt-5-nano",
+      "question": "Could you specify the exact deployment hardware and serving setup (edge vs. cloud; CPU cores and RAM; any GPU; and whether batching is allowed with a typical batch size), so I can lock in precise latency (ms) and throughput (QPS) targets for the tabular plan?",
+      "answer": "Great — to lock in precise latency (ms) and throughput (QPS) targets for the tabular plan, please provide your deployment details. If you don’t have exact specs, you can choose one of the common profiles below as a starting point and I’ll tailor from there.\n\nWhat I need (required fields)\n- Deployment type: Edge/on-device or Cloud (real-time) or Batch/high-throughput\n- CPU cores and RAM (and whether a GPU is available; include model if you have it)\n- GPU presence and type (e.g., 1× T4, V100) or none\n- Batching allowance: Yes or No (and typical batch size if Yes)\n- Optional: Task type (binary/multiclass/regression) to align the primary metric\n\nConcrete presets you can pick from (with explicit targets)\n\nPreset A — Edge / on-device (CPU-only)\n- Hardware example: 4-core CPU, 4 GB RAM, no GPU\n- Latency per inference: 20–40 ms\n- Throughput: 25–50 QPS (batch size 1)\n- Batch size: 1\n- Notes: minimal preprocessing; suitable for lightweight models (logistic regression, small GBM, small linear nets)\n\nPreset B — Cloud real-time (CPU)\n- Hardware example: 8 vCPUs, 16 GB RAM, no GPU\n- Latency per inference: 5–10 ms\n- Throughput: 200–1000 QPS (typical single-sample; batching 1–4 can help)\n- Batch size: 1 (or 2–4 if your serving supports small batches)\n- Notes: good baseline for fast scoring with moderate model complexity\n\nPreset C — Cloud real-time (GPU-accelerated)\n- Hardware example: 1× GPU (e.g., T4) + 32 GB RAM\n- Latency per inference: 1–5 ms\n- Throughput: 1000–5000 QPS (with small batches; batch size 4–32 depending on kernel)\n- Batch size: 4–32\n- Notes: best when you have a heavier model and need very low latency at high throughput\n\nPreset D — Batch/high-throughput\n- Hardware example: 32 vCPUs, 128 GB RAM (or equivalent GPU cluster)\n- Latency per batch: 200 ms per batch\n- Batch size: 32–128\n- Throughput: 160–640 QPS (approximate, scales with batch size)\n- Notes: ideal for nightly/periodic scoring pipelines or streaming with large batches\n\nHow to proceed\n- Pick one preset that matches your intended hardware, or share your exact specs (CPU cores, RAM, GPU, and whether batching is allowed).\n- Tell me your task type (binary/multiclass/regression) so I can align the primary metric.\n- If you have a preferred latency target or a minimum QPS requirement, include that and I’ll adjust the targets accordingly.\n\nOnce you provide the hardware profile (or pick A–D), I’ll lock in precise, concrete latency (ms) and throughput (QPS) targets for your tabular plan and produce a ready-to-use evaluation template with exact measurements, data-split guidance, baselines, and monitoring checks.",
+      "metrics": {
+        "U_group_turn_gt": 0.7482539593663821,
+        "U_discussion_cumulative_gt": 0.7478662929124262,
+        "weight": 0.14285714285714285
+      }
+    }
+  ]
+}

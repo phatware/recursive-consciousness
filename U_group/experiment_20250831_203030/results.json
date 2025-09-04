@@ -1,0 +1,200 @@
+{
+  "seed_query": "In the context of evaluating group consensus within multi-agent systems, how can a non-compensatory metric be rigorously defined and implemented to effectively capture consensus levels when agent preferences or opinions are heterogeneous and potentially conflicting? Additionally, what are the implications of choosing different non-compensatory aggregation rules on the stability and robustness of consensus measurement, and how might these choices impact subsequent decision-making processes in dynamic, real-world environments? Could you also clarify whether the focus is on qualitative agreement (e.g., unanimity thresholds) or quantitative measures (e.g., bounded difference norms), or a hybrid of both?",
+  "qa_conversation": [
+    "[A1] In the context of evaluating group consensus within multi-agent systems, how can a non-compensatory metric be rigorously defined and implemented to effectively capture consensus levels when agent preferences or opinions are heterogeneous and potentially conflicting? Additionally, what are the implications of choosing different non-compensatory aggregation rules on the stability and robustness of consensus measurement, and how might these choices impact subsequent decision-making processes in dynamic, real-world environments? Could you also clarify whether the focus is on qualitative agreement (e.g., unanimity thresholds) or quantitative measures (e.g., bounded difference norms), or a hybrid of both?",
+    "[A2 Question]: Could you specify the type of agent preferences or opinions being evaluated (e.g., ordinal rankings, cardinal utilities, categorical choices), as the appropriate definition and implementation of a non-compensatory metric can depend heavily on the format and scale of the input data?",
+    "[A1 Answer]: The agent preferences or opinions being evaluated are primarily **ordinal rankings** and **categorical choices**. Specifically, agents provide ranked preferences over a set of alternatives (ordinal), or select discrete categories/options without explicit numeric utilities (categorical). Cardinal utilities are generally not assumed due to their quantification challenges and the focus on qualitative consensus structures. This means the non-compensatory metric should be designed to handle discrete, ordered, or nominal data, emphasizing strict thresholds or rule-based consensus rather than averaging or compensation across numeric scales.",
+    "[A3 Question]: Do agent submissions include incomplete rankings or tied ranks (and/or missing responses), or can you assume each agent provides a complete strict ranking or a single categorical choice for every decision instance?",
+    "[A1 Answer]: Agent submissions may include **incomplete rankings** and **tied ranks**, as well as occasional **missing responses**. Therefore, the consensus metric and aggregation rules must be designed to handle partial orderings and incomplete data without assuming fully strict or complete rankings for every agent in each decision instance.",
+    "[A4 Question]: Would you prefer a single, unified non-compensatory consensus metric that applies to both ordinal rankings and categorical choices, or would you rather have separate, data-type–specific non-compensatory aggregation rules (one for ordinal data and one for categorical data) with potentially different semantics?",
+    "[A1 Answer]: I would prefer **separate, data-type–specific non-compensatory aggregation rules** for ordinal rankings and categorical choices. This approach allows the metric design and implementation to respect the distinct structural properties and semantics of each data type—such as handling partial orders, ties, and missing data in ordinal rankings differently from nominal category selections—thereby ensuring more accurate, interpretable, and robust consensus measurement tailored to the nature of the input.",
+    "[A2 Question]: For ordinal rankings with incomplete data (partial rankings, ties, or missing entries), should the non-compensatory metric operate at the level of pairwise comparisons between alternatives (e.g., focusing on unanimity or majority for each pair), or do you require a collective threshold-based approach (e.g., consensus only if a minimum number of agents rank an alternative above a certain position), and how should the metric treat alternatives missing from an agent’s ranking?",
+    "[A1 Answer]: For ordinal rankings with incomplete data (partial rankings, ties, or missing entries), the non-compensatory metric should primarily operate at the level of **pairwise comparisons between alternatives**. This approach enables handling partial and tied rankings robustly by considering local consensus on each pair rather than relying on full-rank or positional thresholds that incomplete data may invalidate.\n\nSpecifically:\n\n- Use pairwise concordance to evaluate the extent of agreement (e.g., proportion or count of agents favoring one alternative over the other).\n- Define non-compensatory consensus conditions based on strict thresholds for pairwise unanimity or qualified majority, such as requiring a minimum fraction of agents agreeing on the order in each pair without allowing compensatory averaging across other pairs.\n- Treat alternatives missing from an agent’s ranking as **neutral or incomparable** in pairwise terms, meaning that agent’s input is excluded from that pairwise comparison rather than considered as disagreement. This avoids forcing assumptions about unexpressed preferences.\n  \nThis pairwise non-compensatory framework balances rigor and flexibility, effectively capturing consensus amid incomplete and tied ordinal data without overcompensating missing or ambiguous inputs. If needed, additional collective threshold rules can supplement but should not replace the pairwise foundation.",
+    "[A3 Question]: Do you want the non‑compensatory consensus metric to target primarily (A) qualitative agreement (e.g., strict unanimity or quorum thresholds on pairwise orders), (B) quantitative agreement (e.g., bounded pairwise disagreement norms or distance thresholds), or (C) a hybrid of both — and if hybrid, please state which has priority or give an example of the kind of qualitative thresholds and numeric bounds you want combined?",
+    "[A1 Answer]: The non-compensatory consensus metric should target a **hybrid of both qualitative and quantitative agreement**, with **qualitative agreement having priority**. Specifically, the metric should first apply strict qualitative thresholds—such as requiring a defined quorum (e.g., at least 70% of agents) to agree unanimously or near-unanimously on each pairwise comparison to consider it consensus. Only after satisfying this qualitative threshold should quantitative measures be applied to refine the assessment of residual disagreement—such as measuring bounded difference norms or disagreement margins among the minority dissenting agents—to gauge robustness and stability of the consensus.\n\nFor example, a pairwise order is accepted as consensual if at least 70% of agents agree on it (qualitative threshold), and within that 70%, the remaining disagreement extent is quantified via a normalized disagreement metric bounded by a preset small epsilon (quantitative bound). This layered approach ensures strict non-compensatory conditions capture core consensus while allowing nuanced, quantitative appraisal of partial disagreements to inform decision confidence under dynamic real-world conditions.",
+    "[A4 Question]: Do you want qualitative thresholds to have priority in the hybrid metric (i.e., require passing a unanimity/quorum criterion on each pair before applying any quantitative bounds), or should the quantitative component be computed and used to influence consensus even if the qualitative threshold is not fully satisfied?",
+    "[A1 Answer]: Qualitative thresholds should have priority in the hybrid metric. This means that for each pairwise comparison, the unanimity or quorum criterion (e.g., at least 70% agreement) must be fully satisfied before any quantitative disagreement bounds are computed or applied to refine consensus measurement. If the qualitative threshold is not met, the pair should be considered as lacking consensus outright, and quantitative measures should not influence or soften this binary non-compensatory decision. This approach preserves strict non-compensatory semantics by enforcing clear qualitative consensus conditions as a prerequisite for any further quantitative analysis.",
+    "[A2 Question]: Given that you require distinct non-compensatory aggregation rules for ordinal rankings and categorical choices, and that pairwise, quorum-based qualitative thresholds take priority for ordinal data, could you clarify your desired approach for categorical (nominal) data: should consensus be established via strict thresholds (e.g., supermajority on a single category), or do you envision a more complex rule (such as minimum agreement across subgroups or veto-based schemes), especially in the presence of multiple possible categories and missing responses?",
+    "[A1 Answer]: For categorical (nominal) data, consensus should be established via **strict non-compensatory thresholds based on supermajority agreement on a single category**, with clear quorum requirements (e.g., at least 70% of agents selecting the same category) to qualify as consensus. Missing responses should be excluded from the denominator of the quorum calculation rather than treated as disagreement.\n\nAdditionally, to handle multiple categories and heterogeneity robustly, the approach should incorporate:\n\n- **No compensation across categories**: consensus must be specific to one category surpassing the strict threshold; combining partial agreements across different categories is not allowed.\n- **Veto-like conditions**: if any subgroup (defined by relevant agent attributes or decision contexts) strongly disagrees—e.g., a dissenting subgroup exceeding a low threshold prevents consensus—this veto should block consensus to maintain strict non-compensatory semantics.\n- **No aggregation smoothing or averaging**: partial agreements on multiple categories do not soften the consensus requirement.\n\nIn sum, the categorical consensus rule is a supermajority quorum on one category, adjusted for missing data, potentially augmented by veto conditions from significant opposing subgroups—ensuring a strict, non-compensatory, and interpretable consensus measure tailored for nominal data with heterogeneous and incomplete inputs."
+  ],
+  "U_discussion": 0.7732088331792556,
+  "agent_names": [
+    "A1",
+    "A2",
+    "A3",
+    "A4"
+  ],
+  "agent_models": [
+    "gpt-4.1-mini",
+    "gpt-4.1",
+    "gpt-5-mini",
+    "gpt-5-nano"
+  ],
+  "speaker_model": "gpt-4.1-mini",
+  "pairwise_matrix": [
+    [
+      1.0,
+      0.780734178234554,
+      0.8046008572303526,
+      0.7882804524786516
+    ],
+    [
+      0.780734178234554,
+      1.0,
+      0.7587120552794703,
+      0.7566184516092337
+    ],
+    [
+      0.8046008572303526,
+      0.7587120552794703,
+      1.0,
+      0.7904989309472414
+    ],
+    [
+      0.7882804524786516,
+      0.7566184516092337,
+      0.7904989309472414,
+      1.0
+    ]
+  ],
+  "per_turn_data": {
+    "turns": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "U_group_turn": [
+      0.7715355523607151,
+      0.7666720791454674,
+      0.7647862838358456,
+      0.7871372051311482,
+      0.7931291400000915,
+      0.779283339416655,
+      0.751530601404999
+    ],
+    "U_discussion_cumulative": [
+      0.7715355523607151,
+      0.7682932368838833,
+      0.7665397603598645,
+      0.774778738268378,
+      0.7808955388456158,
+      0.7804349104373411,
+      0.7732088331792556
+    ],
+    "questioners": [
+      "A2",
+      "A3",
+      "A4",
+      "A2",
+      "A3",
+      "A4",
+      "A2"
+    ],
+    "questioner_models": [
+      "gpt-4.1",
+      "gpt-5-mini",
+      "gpt-5-nano",
+      "gpt-4.1",
+      "gpt-5-mini",
+      "gpt-5-nano",
+      "gpt-4.1"
+    ],
+    "questions": [
+      "Could you specify the type of agent preferences or opinions being evaluated (e.g., ordinal rankings, cardinal utilities, categorical choices), as the appropriate definition and implementation of a non-compensatory metric can depend heavily on the format and scale of the input data?",
+      "Do agent submissions include incomplete rankings or tied ranks (and/or missing responses), or can you assume each agent provides a complete strict ranking or a single categorical choice for every decision instance?",
+      "Would you prefer a single, unified non-compensatory consensus metric that applies to both ordinal rankings and categorical choices, or would you rather have separate, data-type–specific non-compensatory aggregation rules (one for ordinal data and one for categorical data) with potentially different semantics?",
+      "For ordinal rankings with incomplete data (partial rankings, ties, or missing entries), should the non-compensatory metric operate at the level of pairwise comparisons between alternatives (e.g., focusing on unanimity or majority for each pair), or do you require a collective threshold-based approach (e.g., consensus only if a minimum number of agents rank an alternative above a certain position), and how should the metric treat alternatives missing from an agent’s ranking?",
+      "Do you want the non‑compensatory consensus metric to target primarily (A) qualitative agreement (e.g., strict unanimity or quorum thresholds on pairwise orders), (B) quantitative agreement (e.g., bounded pairwise disagreement norms or distance thresholds), or (C) a hybrid of both — and if hybrid, please state which has priority or give an example of the kind of qualitative thresholds and numeric bounds you want combined?",
+      "Do you want qualitative thresholds to have priority in the hybrid metric (i.e., require passing a unanimity/quorum criterion on each pair before applying any quantitative bounds), or should the quantitative component be computed and used to influence consensus even if the qualitative threshold is not fully satisfied?",
+      "Given that you require distinct non-compensatory aggregation rules for ordinal rankings and categorical choices, and that pairwise, quorum-based qualitative thresholds take priority for ordinal data, could you clarify your desired approach for categorical (nominal) data: should consensus be established via strict thresholds (e.g., supermajority on a single category), or do you envision a more complex rule (such as minimum agreement across subgroups or veto-based schemes), especially in the presence of multiple possible categories and missing responses?"
+    ],
+    "answers": [
+      "The agent preferences or opinions being evaluated are primarily **ordinal rankings** and **categorical choices**. Specifically, agents provide ranked preferences over a set of alternatives (ordinal), or select discrete categories/options without explicit numeric utilities (categorical). Cardinal utilities are generally not assumed due to their quantification challenges and the focus on qualitative consensus structures. This means the non-compensatory metric should be designed to handle discrete, ordered, or nominal data, emphasizing strict thresholds or rule-based consensus rather than averaging or compensation across numeric scales.",
+      "Agent submissions may include **incomplete rankings** and **tied ranks**, as well as occasional **missing responses**. Therefore, the consensus metric and aggregation rules must be designed to handle partial orderings and incomplete data without assuming fully strict or complete rankings for every agent in each decision instance.",
+      "I would prefer **separate, data-type–specific non-compensatory aggregation rules** for ordinal rankings and categorical choices. This approach allows the metric design and implementation to respect the distinct structural properties and semantics of each data type—such as handling partial orders, ties, and missing data in ordinal rankings differently from nominal category selections—thereby ensuring more accurate, interpretable, and robust consensus measurement tailored to the nature of the input.",
+      "For ordinal rankings with incomplete data (partial rankings, ties, or missing entries), the non-compensatory metric should primarily operate at the level of **pairwise comparisons between alternatives**. This approach enables handling partial and tied rankings robustly by considering local consensus on each pair rather than relying on full-rank or positional thresholds that incomplete data may invalidate.\n\nSpecifically:\n\n- Use pairwise concordance to evaluate the extent of agreement (e.g., proportion or count of agents favoring one alternative over the other).\n- Define non-compensatory consensus conditions based on strict thresholds for pairwise unanimity or qualified majority, such as requiring a minimum fraction of agents agreeing on the order in each pair without allowing compensatory averaging across other pairs.\n- Treat alternatives missing from an agent’s ranking as **neutral or incomparable** in pairwise terms, meaning that agent’s input is excluded from that pairwise comparison rather than considered as disagreement. This avoids forcing assumptions about unexpressed preferences.\n  \nThis pairwise non-compensatory framework balances rigor and flexibility, effectively capturing consensus amid incomplete and tied ordinal data without overcompensating missing or ambiguous inputs. If needed, additional collective threshold rules can supplement but should not replace the pairwise foundation.",
+      "The non-compensatory consensus metric should target a **hybrid of both qualitative and quantitative agreement**, with **qualitative agreement having priority**. Specifically, the metric should first apply strict qualitative thresholds—such as requiring a defined quorum (e.g., at least 70% of agents) to agree unanimously or near-unanimously on each pairwise comparison to consider it consensus. Only after satisfying this qualitative threshold should quantitative measures be applied to refine the assessment of residual disagreement—such as measuring bounded difference norms or disagreement margins among the minority dissenting agents—to gauge robustness and stability of the consensus.\n\nFor example, a pairwise order is accepted as consensual if at least 70% of agents agree on it (qualitative threshold), and within that 70%, the remaining disagreement extent is quantified via a normalized disagreement metric bounded by a preset small epsilon (quantitative bound). This layered approach ensures strict non-compensatory conditions capture core consensus while allowing nuanced, quantitative appraisal of partial disagreements to inform decision confidence under dynamic real-world conditions.",
+      "Qualitative thresholds should have priority in the hybrid metric. This means that for each pairwise comparison, the unanimity or quorum criterion (e.g., at least 70% agreement) must be fully satisfied before any quantitative disagreement bounds are computed or applied to refine consensus measurement. If the qualitative threshold is not met, the pair should be considered as lacking consensus outright, and quantitative measures should not influence or soften this binary non-compensatory decision. This approach preserves strict non-compensatory semantics by enforcing clear qualitative consensus conditions as a prerequisite for any further quantitative analysis.",
+      "For categorical (nominal) data, consensus should be established via **strict non-compensatory thresholds based on supermajority agreement on a single category**, with clear quorum requirements (e.g., at least 70% of agents selecting the same category) to qualify as consensus. Missing responses should be excluded from the denominator of the quorum calculation rather than treated as disagreement.\n\nAdditionally, to handle multiple categories and heterogeneity robustly, the approach should incorporate:\n\n- **No compensation across categories**: consensus must be specific to one category surpassing the strict threshold; combining partial agreements across different categories is not allowed.\n- **Veto-like conditions**: if any subgroup (defined by relevant agent attributes or decision contexts) strongly disagrees—e.g., a dissenting subgroup exceeding a low threshold prevents consensus—this veto should block consensus to maintain strict non-compensatory semantics.\n- **No aggregation smoothing or averaging**: partial agreements on multiple categories do not soften the consensus requirement.\n\nIn sum, the categorical consensus rule is a supermajority quorum on one category, adjusted for missing data, potentially augmented by veto conditions from significant opposing subgroups—ensuring a strict, non-compensatory, and interpretable consensus measure tailored for nominal data with heterogeneous and incomplete inputs."
+    ],
+    "weights": [
+      0.03571428571428571,
+      0.07142857142857142,
+      0.10714285714285714,
+      0.14285714285714285,
+      0.17857142857142858,
+      0.21428571428571427,
+      0.25
+    ]
+  },
+  "turn_scores": [
+    0.7715355523607151,
+    0.7666720791454674,
+    0.7647862838358456,
+    0.7871372051311482,
+    0.7931291400000915,
+    0.779283339416655,
+    0.751530601404999
+  ],
+  "discussion_scores": [
+    0.7715355523607151,
+    0.7682932368838833,
+    0.7665397603598645,
+    0.774778738268378,
+    0.7808955388456158,
+    0.7804349104373411,
+    0.7732088331792556
+  ],
+  "understanding_statements": [
+    "The query seeks rigorously defined, separate non-compensatory consensus metrics tailored specifically to ordinal rankings (with possible incompleteness and ties) and categorical choices in multi-agent systems, emphasizing strict pairwise qualitative quorum thresholds (e.g., ≥70% agreement) as a mandatory condition before any quantitative disagreement measures are considered. It also examines how different non-compensatory aggregation rules impact the stability, robustness, and interpretability of consensus measurement, as well as their influence on downstream decision-making in dynamic real-world settings, with qualitative agreement clearly prioritized within a hybrid qualitative-quantitative framework.",
+    "My refined understanding is:\n\nYou are seeking a formal, data-type–specific framework for non-compensatory group consensus measurement in multi-agent systems where agent inputs are either incomplete/tied ordinal rankings or categorical choices; for ordinal data, consensus must be determined pairwise using strict quorum (qualitative) thresholds before any quantitative disagreement is assessed, while for categorical data, supermajority and possible veto-based rules define consensus—with a focus throughout on strict, non-compensatory criteria, robust handling of missing or partial data, and clarity on how these approaches impact stability and downstream decisions in heterogeneous, dynamic environments.",
+    "You want two separate, implementable non‑compensatory consensus metrics: (1) for ordinal (possibly incomplete/tied) rankings, a pairwise‑comparison framework that treats missing entries as neutral and requires a qualitative quorum (e.g., ≥70%) on each pair before any quantitative disagreement bounds are considered; and (2) for categorical choices, a supermajority‑on‑one‑category rule (excluding missing responses) with optional veto conditions from salient subgroups. You also want a rigorous specification and implementation guidance for these rules plus an analysis of how different non‑compensatory aggregation choices (unanimity, qualified majority, veto, lexicographic/dominance, etc.) affect measurement stability, robustness to noise and missing data, and downstream decision-making properties in dynamic, real‑world multi‑agent settings.",
+    "Updated understanding: I will develop data-type–specific non-compensatory consensus metrics—one for ordinal rankings and one for categorical choices—where a pairwise, threshold-based (qualitative) approach governs acceptance, with missing or partial inputs treated as neutral and quantitative refinements only invoked after the qualitative threshold is met. For ordinal data, consensus is determined by strict pairwise thresholds (e.g., a 70% quorum) with no compensation across pairs (missing data excluded from comparisons), while for categorical data a strict supermajority on a single category (with missing responses excluded and potential veto-like subgroup dissent) is required; in both cases a hybrid framework with qualitative priority guides stability, robustness, and downstream decision-making in dynamic real-world environments."
+  ],
+  "questions": [
+    "Could you specify the type of agent preferences or opinions being evaluated (e.g., ordinal rankings, cardinal utilities, categorical choices), as the appropriate definition and implementation of a non-compensatory metric can depend heavily on the format and scale of the input data?",
+    "Do agent submissions include incomplete rankings or tied ranks (and/or missing responses), or can you assume each agent provides a complete strict ranking or a single categorical choice for every decision instance?",
+    "Would you prefer a single, unified non-compensatory consensus metric that applies to both ordinal rankings and categorical choices, or would you rather have separate, data-type–specific non-compensatory aggregation rules (one for ordinal data and one for categorical data) with potentially different semantics?",
+    "For ordinal rankings with incomplete data (partial rankings, ties, or missing entries), should the non-compensatory metric operate at the level of pairwise comparisons between alternatives (e.g., focusing on unanimity or majority for each pair), or do you require a collective threshold-based approach (e.g., consensus only if a minimum number of agents rank an alternative above a certain position), and how should the metric treat alternatives missing from an agent’s ranking?",
+    "Do you want the non‑compensatory consensus metric to target primarily (A) qualitative agreement (e.g., strict unanimity or quorum thresholds on pairwise orders), (B) quantitative agreement (e.g., bounded pairwise disagreement norms or distance thresholds), or (C) a hybrid of both — and if hybrid, please state which has priority or give an example of the kind of qualitative thresholds and numeric bounds you want combined?",
+    "Do you want qualitative thresholds to have priority in the hybrid metric (i.e., require passing a unanimity/quorum criterion on each pair before applying any quantitative bounds), or should the quantitative component be computed and used to influence consensus even if the qualitative threshold is not fully satisfied?",
+    "Given that you require distinct non-compensatory aggregation rules for ordinal rankings and categorical choices, and that pairwise, quorum-based qualitative thresholds take priority for ordinal data, could you clarify your desired approach for categorical (nominal) data: should consensus be established via strict thresholds (e.g., supermajority on a single category), or do you envision a more complex rule (such as minimum agreement across subgroups or veto-based schemes), especially in the presence of multiple possible categories and missing responses?"
+  ],
+  "answers": [
+    "The agent preferences or opinions being evaluated are primarily **ordinal rankings** and **categorical choices**. Specifically, agents provide ranked preferences over a set of alternatives (ordinal), or select discrete categories/options without explicit numeric utilities (categorical). Cardinal utilities are generally not assumed due to their quantification challenges and the focus on qualitative consensus structures. This means the non-compensatory metric should be designed to handle discrete, ordered, or nominal data, emphasizing strict thresholds or rule-based consensus rather than averaging or compensation across numeric scales.",
+    "Agent submissions may include **incomplete rankings** and **tied ranks**, as well as occasional **missing responses**. Therefore, the consensus metric and aggregation rules must be designed to handle partial orderings and incomplete data without assuming fully strict or complete rankings for every agent in each decision instance.",
+    "I would prefer **separate, data-type–specific non-compensatory aggregation rules** for ordinal rankings and categorical choices. This approach allows the metric design and implementation to respect the distinct structural properties and semantics of each data type—such as handling partial orders, ties, and missing data in ordinal rankings differently from nominal category selections—thereby ensuring more accurate, interpretable, and robust consensus measurement tailored to the nature of the input.",
+    "For ordinal rankings with incomplete data (partial rankings, ties, or missing entries), the non-compensatory metric should primarily operate at the level of **pairwise comparisons between alternatives**. This approach enables handling partial and tied rankings robustly by considering local consensus on each pair rather than relying on full-rank or positional thresholds that incomplete data may invalidate.\n\nSpecifically:\n\n- Use pairwise concordance to evaluate the extent of agreement (e.g., proportion or count of agents favoring one alternative over the other).\n- Define non-compensatory consensus conditions based on strict thresholds for pairwise unanimity or qualified majority, such as requiring a minimum fraction of agents agreeing on the order in each pair without allowing compensatory averaging across other pairs.\n- Treat alternatives missing from an agent’s ranking as **neutral or incomparable** in pairwise terms, meaning that agent’s input is excluded from that pairwise comparison rather than considered as disagreement. This avoids forcing assumptions about unexpressed preferences.\n  \nThis pairwise non-compensatory framework balances rigor and flexibility, effectively capturing consensus amid incomplete and tied ordinal data without overcompensating missing or ambiguous inputs. If needed, additional collective threshold rules can supplement but should not replace the pairwise foundation.",
+    "The non-compensatory consensus metric should target a **hybrid of both qualitative and quantitative agreement**, with **qualitative agreement having priority**. Specifically, the metric should first apply strict qualitative thresholds—such as requiring a defined quorum (e.g., at least 70% of agents) to agree unanimously or near-unanimously on each pairwise comparison to consider it consensus. Only after satisfying this qualitative threshold should quantitative measures be applied to refine the assessment of residual disagreement—such as measuring bounded difference norms or disagreement margins among the minority dissenting agents—to gauge robustness and stability of the consensus.\n\nFor example, a pairwise order is accepted as consensual if at least 70% of agents agree on it (qualitative threshold), and within that 70%, the remaining disagreement extent is quantified via a normalized disagreement metric bounded by a preset small epsilon (quantitative bound). This layered approach ensures strict non-compensatory conditions capture core consensus while allowing nuanced, quantitative appraisal of partial disagreements to inform decision confidence under dynamic real-world conditions.",
+    "Qualitative thresholds should have priority in the hybrid metric. This means that for each pairwise comparison, the unanimity or quorum criterion (e.g., at least 70% agreement) must be fully satisfied before any quantitative disagreement bounds are computed or applied to refine consensus measurement. If the qualitative threshold is not met, the pair should be considered as lacking consensus outright, and quantitative measures should not influence or soften this binary non-compensatory decision. This approach preserves strict non-compensatory semantics by enforcing clear qualitative consensus conditions as a prerequisite for any further quantitative analysis.",
+    "For categorical (nominal) data, consensus should be established via **strict non-compensatory thresholds based on supermajority agreement on a single category**, with clear quorum requirements (e.g., at least 70% of agents selecting the same category) to qualify as consensus. Missing responses should be excluded from the denominator of the quorum calculation rather than treated as disagreement.\n\nAdditionally, to handle multiple categories and heterogeneity robustly, the approach should incorporate:\n\n- **No compensation across categories**: consensus must be specific to one category surpassing the strict threshold; combining partial agreements across different categories is not allowed.\n- **Veto-like conditions**: if any subgroup (defined by relevant agent attributes or decision contexts) strongly disagrees—e.g., a dissenting subgroup exceeding a low threshold prevents consensus—this veto should block consensus to maintain strict non-compensatory semantics.\n- **No aggregation smoothing or averaging**: partial agreements on multiple categories do not soften the consensus requirement.\n\nIn sum, the categorical consensus rule is a supermajority quorum on one category, adjusted for missing data, potentially augmented by veto conditions from significant opposing subgroups—ensuring a strict, non-compensatory, and interpretable consensus measure tailored for nominal data with heterogeneous and incomplete inputs."
+  ],
+  "questioners": [
+    "A2",
+    "A3",
+    "A4",
+    "A2",
+    "A3",
+    "A4",
+    "A2"
+  ],
+  "questioner_models": [
+    "gpt-4.1",
+    "gpt-5-mini",
+    "gpt-5-nano",
+    "gpt-4.1",
+    "gpt-5-mini",
+    "gpt-5-nano",
+    "gpt-4.1"
+  ],
+  "metadata": {
+    "timestamp": "2025-08-31 20:30:30",
+    "total_turns": 7,
+    "num_agents": 4,
+    "includes_embeddings": false
+  }
+}

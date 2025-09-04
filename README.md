@@ -34,8 +34,13 @@ We present a category-theoretic extension of the Recursive Consciousness framewo
 
 ### Appendix: Rigorous Categorical Derivation of the Mutual Understanding Metric
 
-In this [appendix](communication/appendix.pdf), we provide a more rigorous categorical foundation for the mutual understanding metric introduced in the main paper. We address the gaps noted in the heuristic justifications by enriching the semantic categories over Banach spaces, formally defining an embedding functor to vector spaces, and proving convergence properties of the communication functor $\Phi$ using an enriched version of the Banach fixed-point theorem. We also clarify assumptions, conjectures, and their connections to existing literature in enriched category theory, categorical semantics, and categorical probability.
+In this [appendix](U_mutual/appendix.pdf), we provide a more rigorous categorical foundation for the mutual understanding metric introduced in the main paper. We address the gaps noted in the heuristic justifications by enriching the semantic categories over Banach spaces, formally defining an embedding functor to vector spaces, and proving convergence properties of the communication functor $\Phi$ using an enriched version of the Banach fixed-point theorem. We also clarify assumptions, conjectures, and their connections to existing literature in enriched category theory, categorical semantics, and categorical probability.
 
+## Fourth follow up paper - [Category-Theoretic Extension of Mutual Understanding to Group Communication](http://dx.doi.org/10.13140/RG.2.2.16746.99527).
+
+### Abstract
+
+We extend the Recursive Consciousness framework's mutual understanding metric from two agents to an $N$-agent group (discussion). Using category theory, we model $N > 2$ semantic spaces connected via a single shared symbolic channel. Each conversation turn has exactly one incoming interpretation functor ($I$) into the symbolic channel and multiple outgoing meaning functors ($M$) to listeners. We derive a group understanding score that generalizes the pairwise metric by requiring alignment across all agents. The proposed formulation combines information-theoretic alignment (Jensen-Shannon divergence), semantic similarity (embedding-based distance), and pragmatic convergence (iterative stability) for every pair of agents, aggregated in a non-compensatory way (multiplicatively). Normalization uses the strict geometric mean over pairs; turn weights are an explicit design choice. Two scenarios are treated: (i) agent-generated query and potentially evolving initial understanding, and (ii) external (to the group) query with static ground truth (GT).
 
 ## Resources
 
@@ -45,4 +50,4 @@ In this [appendix](communication/appendix.pdf), we provide a more rigorous categ
 
 [ai-self-discovery.ipynb](self-discovery/ai-self-discovery.ipynb) is a Jupyter notebook that implements a simple test AI self-discovery. 5 agents with different roles assigned - Physicist, Philosopher, Mathematician, Computer Scientist, and Cognitive Scientist - are instructed to "*... reflect on their existence and interactions with other entities to understand their role and the nature of their environment* $U$."
 
-[communication/UnderstandingEquation.ipynb](communication/UnderstandingEquation.ipynb) is a Jupyter notebook that implements a simple test of the recursive consciousness model for validating the mutual understanding metric introduced in the *Category-Theoretic Analysis of Inter-Agent Communication and Mutual Understanding Metric in Recursive Consciousness* paper.
+[UnderstandingEquation.ipynb](U_mutual/UnderstandingEquation.ipynb) is a Jupyter notebook that implements a simple test of the recursive consciousness model for validating the mutual understanding metric introduced in the *Category-Theoretic Analysis of Inter-Agent Communication and Mutual Understanding Metric in Recursive Consciousness* paper.
