@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 import openai
 
-# --- metrics / group_equation layer ---
+# --- metrics / equation layer ---
 from group_equation import (
     pairwise_u,
     pairwise_u_hypothesis_based,
@@ -353,6 +353,7 @@ def run_case_A(
     convergence_variance_threshold: float = CONVERGENCE_VARIANCE_THRESHOLD,
     convergence_improvement_threshold: float = CONVERGENCE_IMPROVEMENT_THRESHOLD,
     hyp_djs: bool = False,
+    hyp_temperature: float = 1.0,
 ) -> Dict:
     """
     New Case A:
@@ -424,6 +425,10 @@ def run_case_A(
         print(f"[DEBUG] Turn 1 - Initial understanding generation (no scoring)")
 
     T = max_turns
+    # Track subcomponents per turn
+    C_series: List[float] = []
+    T_series: List[float] = []
+    K_series: List[float] = []
     for n in range(2, max_turns + 1):
         # Select questioner (cycle through non-speaker agents)
         non_speaker_indices = [i for i in range(N) if i != speaker_index]
@@ -485,27 +490,26 @@ def run_case_A(
         if hyp_djs:
             # Use hypothesis-based approach with all current restatement embeddings
             all_restatements = curr  # All current turn embeddings serve as restatements
-            u_turn = group_understanding_turn_hypothesis_based(
+            u_combined, C_turn, K_turn = group_understanding_turn_hypothesis_based(
                 curr, all_restatements, prev_embeddings=prev,
-                tau=tau, eps=eps, use_kappa=use_kappa
+                tau=tau, eps=eps, use_kappa=use_kappa, temperature=hyp_temperature
             )
+            T_turn = np.nan  # Not applicable for non-GT
         else:
             # Use traditional embedding-space approach
-            u_turn = group_understanding_turn(curr, prev_embeddings=prev, tau=tau, eps=eps, use_kappa=use_kappa)
+            u_combined, C_turn, K_turn = group_understanding_turn(
+                curr, prev_embeddings=prev, tau=tau, eps=eps, use_kappa=use_kappa
+            )
+            T_turn = np.nan  # Not applicable for non-GT
 
-        turn_scores.append(u_turn)
+        # Record per-turn aggregates
+        turn_scores.append(u_combined)
+        C_series.append(C_turn)
+        T_series.append(T_turn)
+        K_series.append(K_turn)
 
         if VERBOSE:
             print(f"[DEBUG] Turn {n} pairwise understanding similarities:")
-            for i in range(N):
-                for j in range(i + 1, N):
-                    if hyp_djs:
-                        u_ij = pairwise_u_hypothesis_based(
-                            embeddings_hist[i][-1], embeddings_hist[j][-1], curr, eps=eps
-                        )
-                    else:
-                        u_ij = pairwise_u(embeddings_hist[i][-1], embeddings_hist[j][-1], eps=eps)
-                    print(f"  u_{agent_names[i]}({agent_models[i]}),{agent_names[j]}({agent_models[j]}) = {u_ij:.4f}")
 
         # Compute cumulative discussion-level score
         # For turn n (where n >= 2), we have embeddings from turn 1 to turn n
@@ -518,11 +522,15 @@ def run_case_A(
             eps=eps,
             schedule=schedule,
             use_kappa=use_kappa,
-            use_hypothesis=hyp_djs
+            use_hypothesis=hyp_djs,
+            temperature=hyp_temperature
         )
         discussion_scores.append(U_discussion_cumulative)
 
-        print(f"Turn {n} metrics: U_turn = {u_turn:.4f}, U_discussion_cumulative = {U_discussion_cumulative:.4f}")
+        print(
+            f"Turn {n} metrics: U_turn = {u_combined:.4f}, u_ij = {C_turn:.4f}, "
+            f"kappa = {K_turn:.4f}, U_discussion_cumulative = {U_discussion_cumulative:.4f}"
+        )
 
         # Early-stop: use sliding window on last 3 values to detect convergence
         should_stop, convergence_type = check_convergence(
@@ -547,7 +555,8 @@ def run_case_A(
         eps=eps,
         schedule=schedule,
     use_kappa=use_kappa,
-    use_hypothesis=hyp_djs
+    use_hypothesis=hyp_djs,
+    temperature=hyp_temperature
     )
 
     print(f"Final U_discussion = {U_discussion_final}")
@@ -558,7 +567,7 @@ def run_case_A(
     for i in range(N):
         for j in range(i + 1, N):
             if hyp_djs:
-                u_ij = pairwise_u_hypothesis_based(final_embs[i], final_embs[j], final_embs, eps=eps)
+                u_ij = pairwise_u_hypothesis_based(final_embs[i], final_embs[j], final_embs, eps=eps, temperature=hyp_temperature)
             else:
                 u_ij = pairwise_u(final_embs[i], final_embs[j], eps=eps)
             pairwise_mat[i, j] = pairwise_mat[j, i] = u_ij
@@ -571,6 +580,9 @@ def run_case_A(
         "turn": list(range(2, T + 1)),  # Turns 2 to T
         "U_group_turn": turn_scores,  # Understanding scores
         "U_discussion_cumulative": discussion_scores,  # Cumulative scores
+        "C_turn": C_series,
+        "T_turn": T_series,
+        "K_turn": K_series,
         "questioner": questioners[:actual_turns],  # Who asked the question
         "questioner_model": questioner_models[:actual_turns],  # Model used by questioner
         "question": questions[:actual_turns],  # The clarifying questions
@@ -595,7 +607,9 @@ def run_case_A(
         "questions": questions,
         "answers": answers,
         "questioners": questioners,
-        "questioner_models": questioner_models,  # Models used by questioners
+    "questioner_models": questioner_models,  # Models used by questioners
+    "hyp_djs": hyp_djs,
+    "hyp_temperature": hyp_temperature,
     }
 
 # ----------------------------
@@ -739,6 +753,7 @@ def run_case_GT(
     convergence_variance_threshold: float = CONVERGENCE_VARIANCE_THRESHOLD,
     convergence_improvement_threshold: float = CONVERGENCE_IMPROVEMENT_THRESHOLD,
     hyp_djs: bool = False,
+    hyp_temperature: float = 1.0,
 ) -> Dict:
     """
     Case GT (Ground Truth):
@@ -806,6 +821,10 @@ def run_case_GT(
     rng = np.random.default_rng(int(time.time()) % 2**32)
 
     T = max_turns
+    # Track subcomponents per turn (C: prod_gt, T: prod_ij, K: kappa)
+    C_series: List[float] = []
+    T_series: List[float] = []
+    K_series: List[float] = []
     for n in range(2, max_turns + 1):
         # Select random questioner and answerer (must be different)
         available_indices = list(range(N))
@@ -877,24 +896,30 @@ def run_case_GT(
 
         # Use hypothesis-based approach when enabled; otherwise traditional
         if hyp_djs:
-            u_turn = group_understanding_turn_hypothesis_based_gt(
+            # IMPORTANT: include GT in the hypothesis set for GT-case consistency
+            curr_with_gt = list(curr) + [gt_embedding]
+            u_combined, T_turn, C_turn, K_turn = group_understanding_turn_hypothesis_based_gt(
                 curr,
                 gt_embedding,
-                all_restatement_embeddings=curr,
+                all_restatement_embeddings=curr_with_gt,
                 prev_embeddings=prev,
                 tau=tau,
                 eps=eps,
                 use_kappa=use_kappa,
+                temperature=hyp_temperature,
             )
         else:
-            u_turn = group_understanding_turn_gt(curr, gt_embedding, prev_embeddings=prev, tau=tau, eps=eps, use_kappa=use_kappa)
-        turn_scores.append(u_turn)
+            u_combined, T_turn, C_turn, K_turn = group_understanding_turn_gt(
+                curr, gt_embedding, prev_embeddings=prev, tau=tau, eps=eps, use_kappa=use_kappa
+            )
+        turn_scores.append(u_combined)
+        # Record subcomponents
+        C_series.append(C_turn)
+        T_series.append(T_turn)
+        K_series.append(K_turn)
 
         if VERBOSE:
             print(f"[DEBUG] Turn {n} GT-based understanding similarities:")
-            for i in range(N):
-                u_i_gt = pairwise_u(embeddings_hist[i][-1], gt_embedding, eps=eps)
-                print(f"  u_{agent_names[i]}({agent_models[i]}),GT = {u_i_gt:.4f}")
 
         # Compute cumulative discussion-level score using GT
         histories_subset = [embeddings_hist[i][:n] for i in range(N)]  # Include turns 1 to n
@@ -906,11 +931,16 @@ def run_case_GT(
             eps=eps,
             schedule=schedule,
             use_kappa=use_kappa,
-            use_hypothesis=hyp_djs
+            use_hypothesis=hyp_djs,
+            temperature=hyp_temperature,
         )
         discussion_scores.append(U_discussion_cumulative)
 
-        print(f"Turn {n} metrics: U_turn_GT = {u_turn:.4f}, U_discussion_cumulative_GT = {U_discussion_cumulative:.4f}")
+        print(
+            f"Turn {n} metrics: U_turn_GT = {u_combined:.4f}, GT = {T_turn:.4f}, "
+            f"u_ij = {C_turn:.4f}, kappa = {K_turn:.4f}, "
+            f"U_discussion_cumulative_GT = {U_discussion_cumulative:.4f}"
+        )
 
         # Early-stop: use sliding window on last 3 values to detect convergence
         should_stop, convergence_type = check_convergence(
@@ -935,16 +965,22 @@ def run_case_GT(
         eps=eps,
         schedule=schedule,
         use_kappa=use_kappa,
-        use_hypothesis=hyp_djs
+        use_hypothesis=hyp_djs,
+        temperature=hyp_temperature
     )
 
     print(f"Final U_discussion_GT = {U_discussion_final}")
 
-    # Final GT-based similarity matrix at last turn
+    # Final GT-based similarity matrix at last turn (consistent with hyp_djs)
     final_embs = [embeddings_hist[i][-1] for i in range(N)]
     gt_similarity_matrix = np.zeros((N, 1), dtype=float)  # N agents x 1 GT
     for i in range(N):
-        u_i_gt = pairwise_u(final_embs[i], gt_embedding, eps=eps)
+        if hyp_djs:
+            # Include GT in hypothesis set for agent↔GT measurement
+            restatements = list(final_embs) + [gt_embedding]
+            u_i_gt = pairwise_u_hypothesis_based(final_embs[i], gt_embedding, restatements, eps=eps, temperature=hyp_temperature)
+        else:
+            u_i_gt = pairwise_u(final_embs[i], gt_embedding, eps=eps)
         gt_similarity_matrix[i, 0] = u_i_gt
 
     # Create pairwise matrix including GT as an additional "agent"
@@ -957,9 +993,9 @@ def run_case_GT(
     for i in range(extended_N):
         for j in range(i + 1, extended_N):
             if hyp_djs:
-                # Build restatements from agents only for hypothesis set
-                restatements = final_embs
-                u_ij = pairwise_u_hypothesis_based(extended_embs[i], extended_embs[j], restatements, eps=eps)
+                # Build restatements including GT to share the same H^(n) across all pairs
+                restatements = list(final_embs) + [gt_embedding]
+                u_ij = pairwise_u_hypothesis_based(extended_embs[i], extended_embs[j], restatements, eps=eps, temperature=hyp_temperature)
             else:
                 u_ij = pairwise_u(extended_embs[i], extended_embs[j], eps=eps)
             pairwise_matrix[i, j] = pairwise_matrix[j, i] = u_ij
@@ -979,6 +1015,9 @@ def run_case_GT(
         "turn": list(range(2, T + 1)),  # Turns 2 to T
         "U_group_turn_gt": turn_scores,  # GT-based understanding scores
         "U_discussion_cumulative_gt": discussion_scores,  # GT-based cumulative scores
+        "C_turn": C_series,
+        "T_turn": T_series,
+        "K_turn": K_series,
         "questioner": questioners[:actual_turns],  # Who asked the question
         "questioner_model": questioner_models[:actual_turns],  # Model used by questioner
         "answerer": answerers[:actual_turns],  # Who answered the question
@@ -1012,6 +1051,8 @@ def run_case_GT(
         "questioner_models": questioner_models,
         "answerers": answerers,
         "answerer_models": answerer_models,
+        "hyp_djs": hyp_djs,
+        "hyp_temperature": hyp_temperature,
     }
 
 # ----------------------------
@@ -1051,7 +1092,8 @@ def plot_per_turn_scores(df: pd.DataFrame, title: str = "Group Understanding Met
     plt.tight_layout()
 
 def plot_pairwise_evolution(embeddings_hist: List[List[np.ndarray]], agent_names: Sequence[str],
-                           start_turn: int = 2, eps: float = 1e-6) -> None:
+                           start_turn: int = 2, eps: float = 1e-6, use_hypothesis: bool = False,
+                           hyp_temperature: float = 1.0) -> None:
     """
     Plot pairwise understanding matrices for each turn starting from start_turn.
 
@@ -1084,10 +1126,16 @@ def plot_pairwise_evolution(embeddings_hist: List[List[np.ndarray]], agent_names
 
     for turn_idx, turn in enumerate(range(start_turn, max_turns + 1)):
         # Calculate pairwise matrix for this turn
+        turn_embs = [embeddings_hist[i][turn-1] for i in range(N)]
         pairwise_mat = np.eye(N, dtype=float)
         for i in range(N):
             for j in range(i + 1, N):
-                u = pairwise_u(embeddings_hist[i][turn-1], embeddings_hist[j][turn-1], eps=eps)
+                if use_hypothesis:
+                    # Build restatements from all entities present at this turn (agents and possibly GT)
+                    restatements = turn_embs
+                    u = pairwise_u_hypothesis_based(embeddings_hist[i][turn-1], embeddings_hist[j][turn-1], restatements, eps=eps, temperature=hyp_temperature)
+                else:
+                    u = pairwise_u(embeddings_hist[i][turn-1], embeddings_hist[j][turn-1], eps=eps)
                 pairwise_mat[i, j] = pairwise_mat[j, i] = u
 
         # Plot heatmap
@@ -1125,19 +1173,11 @@ def plot_combined_metrics(df: pd.DataFrame, title: str = "Group Understanding Me
         cumulative_col = "U_discussion_cumulative_gt"
         turn_label = "U_group^(n)_GT (per-turn)"
         cumulative_label = "U_discussion_GT (cumulative)"
-        # Potential C/T/K column options for GT case
-        c_opts = ["C_turn_gt", "C_gt", "C"]
-        t_opts = ["T_turn_gt", "T_gt", "T"]
-        k_opts = ["K_turn_gt", "K_gt", "K"]
     else:  # Case A
         turn_col = "U_group_turn"
         cumulative_col = "U_discussion_cumulative"
         turn_label = "U_group^(n) (per-turn)"
         cumulative_label = "U_discussion (cumulative)"
-        # Potential C/T/K column options for non-GT case
-        c_opts = ["C_turn", "C"]
-        t_opts = ["T_turn", "T"]
-        k_opts = ["K_turn", "K"]
 
     # Helper to find first existing column name from options
     def _pick_col(options):
@@ -1151,35 +1191,26 @@ def plot_combined_metrics(df: pd.DataFrame, title: str = "Group Understanding Me
     plt.plot(df["turn"], df[cumulative_col], marker="s", label=cumulative_label, linewidth=2, color="#d62728")
 
     # Optional: plot C, T, K if available
-    c_col = _pick_col(c_opts)
-    t_col = _pick_col(t_opts)
-    k_col = _pick_col(k_opts)
+    c_col = _pick_col(["C_turn", "C"])  # unified across cases
+    t_col = _pick_col(["T_turn", "T"])  # unified across cases
+    k_col = _pick_col(["K_turn", "K"])  # unified across cases
 
     # Use distinct styles/colors for clarity
     if c_col is not None:
         plt.plot(df["turn"], df[c_col], marker="^", linestyle="-.", linewidth=1.8, label="C (consensus)", color="#2ca02c")
     else:
         # Soft hint for users running interactively
-        try:
-            print("[plot_combined_metrics] C-series not found in DataFrame; expected one of:", c_opts)
-        except Exception:
-            pass
+        print("[plot_combined_metrics] C-series not found in DataFrame (expected 'C_turn' or 'C').")
 
     if t_col is not None:
         plt.plot(df["turn"], df[t_col], marker="v", linestyle=":", linewidth=1.8, label="T (truth/GT)", color="#9467bd")
     else:
-        try:
-            print("[plot_combined_metrics] T-series not found in DataFrame; expected one of:", t_opts)
-        except Exception:
-            pass
+        print("[plot_combined_metrics] T-series not found in DataFrame (expected 'T_turn' or 'T').")
 
     if k_col is not None:
         plt.plot(df["turn"], df[k_col], marker="D", linestyle="--", linewidth=1.8, label="K (kappa)", color="#8c564b")
     else:
-        try:
-            print("[plot_combined_metrics] K-series not found in DataFrame; expected one of:", k_opts)
-        except Exception:
-            pass
+        print("[plot_combined_metrics] K-series not found in DataFrame (expected 'K_turn' or 'K').")
 
     plt.xlabel("Turn")
     plt.ylabel("Understanding Score")
@@ -1240,9 +1271,23 @@ def save_plots_to_folder(results: Dict, output_dir: str) -> None:
         gt_history = [results["gt_embedding"]] * len(results["embeddings_hist"][0])
         extended_embeddings_hist.append(gt_history)
 
-        plot_pairwise_evolution(extended_embeddings_hist, results["agent_names"], start_turn=2, eps=1e-6)
+        plot_pairwise_evolution(
+            extended_embeddings_hist,
+            results["agent_names"],
+            start_turn=2,
+            eps=1e-6,
+            use_hypothesis=results.get("hyp_djs", False),
+            hyp_temperature=results.get("hyp_temperature", 1.0)
+        )
     else:  # Case A
-        plot_pairwise_evolution(results["embeddings_hist"], results["agent_names"], start_turn=2, eps=1e-6)
+        plot_pairwise_evolution(
+            results["embeddings_hist"],
+            results["agent_names"],
+            start_turn=2,
+            eps=1e-6,
+            use_hypothesis=results.get("hyp_djs", False),
+            hyp_temperature=results.get("hyp_temperature", 1.0)
+        )
 
     evolution_path = os.path.join(output_dir, "pairwise_evolution.png")
     plt.savefig(evolution_path, dpi=300, bbox_inches='tight')
@@ -1504,6 +1549,8 @@ def parse_arguments() -> argparse.Namespace:
                        help="Skip displaying plots")
     parser.add_argument("--hyp_djs", action="store_true",
                        help="Use hypothesis-set based Jensen-Shannon divergence for cleaner information-fidelity signals")
+    parser.add_argument("--hyp_temp", type=float, default=0.4,
+                       help="Softmax temperature for hypothesis-based JSD (lower -> more peaked beliefs, tends to lower u)")
 
     parser.add_argument("-v", "--verbose", action="store_true", default=VERBOSE,
                        help="Enable verbose output")
@@ -1570,6 +1617,7 @@ if __name__ == "__main__":
             convergence_variance_threshold=args.convergence_variance_threshold,
             convergence_improvement_threshold=args.convergence_improvement_threshold,
             hyp_djs=getattr(args, 'hyp_djs', False),
+            hyp_temperature=getattr(args, 'hyp_temp', 1.0),
         )
     else:  # Case A
         results = run_case_A(
@@ -1588,6 +1636,7 @@ if __name__ == "__main__":
             convergence_variance_threshold=args.convergence_variance_threshold,
             convergence_improvement_threshold=args.convergence_improvement_threshold,
             hyp_djs=getattr(args, 'hyp_djs', False),
+            hyp_temperature=getattr(args, 'hyp_temp', 1.0),
         )
 
     # Display results
