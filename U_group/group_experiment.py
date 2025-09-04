@@ -554,9 +554,9 @@ def run_case_A(
         tau=tau,
         eps=eps,
         schedule=schedule,
-    use_kappa=use_kappa,
-    use_hypothesis=hyp_djs,
-    temperature=hyp_temperature
+        use_kappa=use_kappa,
+        use_hypothesis=hyp_djs,
+        temperature=hyp_temperature
     )
 
     print(f"Final U_discussion = {U_discussion_final}")
@@ -607,9 +607,9 @@ def run_case_A(
         "questions": questions,
         "answers": answers,
         "questioners": questioners,
-    "questioner_models": questioner_models,  # Models used by questioners
-    "hyp_djs": hyp_djs,
-    "hyp_temperature": hyp_temperature,
+        "questioner_models": questioner_models,  # Models used by questioners
+        "hyp_djs": hyp_djs,
+        "hyp_temperature": hyp_temperature,
     }
 
 # ----------------------------
@@ -1355,9 +1355,21 @@ def save_experiment_complete(results: Dict, local_llm: bool, output_dir: str = N
             # Add GT embedding history (constant across all turns)
             gt_history = [results["gt_embedding"]] * len(results["embeddings_hist"][0])
             extended_embeddings_hist.append(gt_history)
-            plot_pairwise_evolution(extended_embeddings_hist, results["agent_names"], start_turn=2, eps=1e-6)
+            plot_pairwise_evolution(extended_embeddings_hist,
+                                    results["agent_names"],
+                                    start_turn=2,
+                                    eps=1e-6,
+                                    use_hypothesis=results.get("hyp_djs", False),
+                                    hyp_temperature=results.get("hyp_temperature", 1.0)
+            )
         else:  # Case A
-            plot_pairwise_evolution(results["embeddings_hist"], results["agent_names"], start_turn=2, eps=1e-6)
+            plot_pairwise_evolution(results["embeddings_hist"],
+                                    results["agent_names"],
+                                    start_turn=2,
+                                    eps=1e-6,
+                                    use_hypothesis=results.get("hyp_djs", False),
+                                    hyp_temperature=results.get("hyp_temperature", 1.0)
+            )
 
         plt.show()
 
