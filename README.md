@@ -2,7 +2,7 @@
 
 *Or how the universe remembers itself through us.*
 
-#### Author: Stan Miasnikov, April-May 2025
+#### Author: Stan Miasnikov, April-September 2025
 
 ## Full paper available at [Recursive Consciousness: Modeling Minds in Forgetful Systems](http://dx.doi.org/10.13140/RG.2.2.26969.22884).
 
@@ -41,6 +41,14 @@ In this [appendix](U_mutual/appendix.pdf), we provide a more rigorous categorica
 ### Abstract
 
 We extend the Recursive Consciousness framework's mutual understanding metric from two agents to an $N$-agent group (discussion). Using category theory, we model $N > 2$ semantic spaces connected via a single shared symbolic channel. Each conversation turn has exactly one incoming interpretation functor ($I$) into the symbolic channel and multiple outgoing meaning functors ($M$) to listeners. We derive a group understanding score that generalizes the pairwise metric by requiring alignment across all agents. The proposed formulation combines information-theoretic alignment (Jensen-Shannon divergence), semantic similarity (embedding-based distance), and pragmatic convergence (iterative stability) for every pair of agents, aggregated in a non-compensatory way (multiplicatively). Normalization uses the strict geometric mean over pairs; turn weights are an explicit design choice. Two scenarios are treated: (i) agent-generated query and potentially evolving initial understanding, and (ii) external (to the group) query with static ground truth (GT).
+
+## Fifth follow up paper - [Choosing Meaning-Preserving Embeddings for RAG: From Infinite Banach to Finite Practical Vector Spaces](http://dx.doi.org/10.13140/RG.2.2.15169.21605).
+
+### Abstract
+
+Most guides to embedding models for RAG emphasize empirical leaderboards and heuristics, leaving open the principled question of when an embedding is "large enough" and why one model should be preferred over another. In this paper, we aim to place embedding choice on a theoretical footing within the Recursive Consciousness (RC) framework. Previously, we proved that a full \& faithful infinite embedding into an infinite Banach-enriched category exists for any normed-category of semantics. Now we show that practical finite embeddings used in language models and specifically in retrieval-augmented generation (RAG) act as bi-Lipschitz approximations whose operator distortion in the embedded meaning-transfer pipeline ($E\!\circ M\!\circ I$) yields *two-sided bounds* on Jensen--Shannon divergence between induced belief distributions. These bounds give *testable* criteria for meaning preservation, translate into quantitative prescriptions for dimension and context (with human-language scales as guidance). Beyond size, we catalogue structural properties: isotropy, stability, invariance/equivariance, compositionality, calibration, domain/temporal alignment, with diagnostics and mitigations that materially affect retrieval quality. Thus, unlike prior surveys, this work elevates embedding choice from heuristics to *principled design* with measurable tolerances for RAG/agentic and human/AI communication settings.
+
+The code for this paper is in a separate repository: [Choosing Meaning-Preserving Embeddings for RAG](https://github.com/phatware/embedding)
 
 ## Resources
 
