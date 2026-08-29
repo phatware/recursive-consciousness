@@ -1,6 +1,6 @@
 # Attribution-NonCommercial-ShareAlike 4.0 International
 
-#### Copyright (c) 2025 Stan Miasnikov. All rights reserved.
+#### Copyright (c) 2024-2026 Stan Miasnikov. All rights reserved.
 
 ### You are free to:
 
