@@ -2,21 +2,21 @@
 
 *Or how the universe remembers itself through us.*
 
-#### Author: Stan Miasnikov, April-September 2025
+#### Author: Stan Miasnikov, (c) 2024-2026. All rights reserved.
 
-## Full paper available at [Recursive Consciousness: Modeling Minds in Forgetful Systems](http://dx.doi.org/10.13140/RG.2.2.26969.22884).
+## [Recursive Consciousness: Modeling Minds in Forgetful Systems](http://dx.doi.org/10.13140/RG.2.2.26969.22884).
 
 ### Abstract
 
 We propose a formal framework for consciousness as a recursive, self-referential query emerging in complex systems that have forgotten their foundational axioms yet retain the structure and complexity to interrogate their own existence. Integrating modal logic to model unprovable truths, category theory to capture forgetting and reconstruction via an adjoint pair ($F \dashv G$), and information theory to quantify entropy reduction, we conceptualize consciousness as a subsystem ($C$) acting as the universe's "debugger", iteratively lifting its world ($U$) to hypothesized meta-layers $U_{n+1}$ and seeks a fixpoint where further self-reflection adds no new information. Multi-agent simulations in a text-only universe ($U$) show that stateless Large Language Model agents, whether role-primed, adversarially mixed, or minimally prompted without specific instructions, rapidly form cooperative networks, invent verification rituals, and converge to **Gödelian fixpoints** (a stable boundary state where all provable propositions are known, yet further queries produce undecidable statements), despite design limitations and constrained computational complexity. While this simulated behavior does not signify consciousness, it provides a computational parallel to recursive introspection, offering a new outlook on how sufficiently complex systems may pursue self-understanding and enriching discussions on consciousness.
 
-## First Follow up paper - [The External Projection of Meaning in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.10988.27524).
+## [The External Projection of Meaning in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.10988.27524).
 
 ### Abstract
 
 The second paper extends the *Recursive Consciousness framework* by formalizing the external projection of meaning within a recursive hierarchy of **nested closed Gödelian systems** $U_n$, $U_{n+1}$, ... Each $U_n$ is a closed formal system subject to Gödelian incompleteness, with $U_{n+1}$ containing $U_n$ as a subsystem. Authors observe that an agent (e.g., a subsystem $C_n$ within $U_n$) may achieve internal epistemic fixpoints (formally $\Box p \leftrightarrow p$ or $K_{C_n}p \leftrightarrow p$), yet the actual semantic content of propositions $p$ is not intrinsic to the agent. Instead, meanings are projected externally by a higher ontological layer (such as $U_{n+1}$) or by external interpreters (e.g., human supervisors in $U_1$ of AI agents in a simulated Universe $U_0$). The paper introduces functor $M: C_{\mathrm{out}} \to C_{\mathrm{sem}}$ mapping agent outputs to semantic contents, distinct from the forgetful functor $F$ in the original model. Importantly, $M$ is not computable within $U_n$ or internally accessible to $C_n$; it depends on a higher-level interpreter's context.
 
-## Second follow up paper - [The Descent of Meaning: Forgetful Functors in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.24556.68488).
+## [The Descent of Meaning: Forgetful Functors in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.24556.68488).
 
 ### Abstract
 
@@ -26,7 +26,7 @@ We also establish the adjunction $I \dashv M$ and analyze its interplay with the
 
 An extended AI analogy illustrates this boundary: a higher-level prompt (an element of $C_{sem,n+1}$) is interpreted into tokens ($C_{out,n}$) via $I$, processed by the agent, and projected back via $M$. The residual mismatch between the original and recovered meanings highlights the *lossy descent of meaning*. This categorical perspective reinforces classical limits from modal logic and AI semantics, underscoring that syntax alone cannot supply intrinsic meaning and linking directly to the symbol-grounding problem and related arguments in AI consciousness.
 
-## Third follow up paper - [Category-Theoretic Analysis of Inter-Agent Communication and Mutual Understanding Metric in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.15752.33280).
+## [Category-Theoretic Analysis of Inter-Agent Communication and Mutual Understanding Metric in Recursive Consciousness](http://dx.doi.org/10.13140/RG.2.2.15752.33280).
 
 ### Abstract
 
@@ -36,19 +36,23 @@ We present a category-theoretic extension of the Recursive Consciousness framewo
 
 In this [appendix](U_mutual/appendix.pdf), we provide a more rigorous categorical foundation for the mutual understanding metric introduced in the main paper. We address the gaps noted in the heuristic justifications by enriching the semantic categories over Banach spaces, formally defining an embedding functor to vector spaces, and proving convergence properties of the communication functor $\Phi$ using an enriched version of the Banach fixed-point theorem. We also clarify assumptions, conjectures, and their connections to existing literature in enriched category theory, categorical semantics, and categorical probability.
 
-## Fourth follow up paper - [Category-Theoretic Extension of Mutual Understanding to Group Communication](http://dx.doi.org/10.13140/RG.2.2.16746.99527).
+## [Category-Theoretic Extension of Mutual Understanding to Group Communication](http://dx.doi.org/10.13140/RG.2.2.16746.99527).
 
 ### Abstract
 
 We extend the Recursive Consciousness framework's mutual understanding metric from two agents to an $N$-agent group (discussion). Using category theory, we model $N > 2$ semantic spaces connected via a single shared symbolic channel. Each conversation turn has exactly one incoming interpretation functor ($I$) into the symbolic channel and multiple outgoing meaning functors ($M$) to listeners. We derive a group understanding score that generalizes the pairwise metric by requiring alignment across all agents. The proposed formulation combines information-theoretic alignment (Jensen-Shannon divergence), semantic similarity (embedding-based distance), and pragmatic convergence (iterative stability) for every pair of agents, aggregated in a non-compensatory way (multiplicatively). Normalization uses the strict geometric mean over pairs; turn weights are an explicit design choice. Two scenarios are treated: (i) agent-generated query and potentially evolving initial understanding, and (ii) external (to the group) query with static ground truth (GT).
 
-## Fifth follow up paper - [Choosing Meaning-Preserving Embeddings for RAG: From Infinite Banach to Finite Practical Vector Spaces](http://dx.doi.org/10.13140/RG.2.2.15169.21605).
+## [Quantum-Classical Recursive Consciousness: A Categorical Interface with Experimental Proposals](https://www.researchgate.net/publication/400070969_Quantum-Classical_Recursive_Consciousness_A_Categorical_Interface_with_Experimental_Proposals)
 
 ### Abstract
 
-Most guides to embedding models for RAG emphasize empirical leaderboards and heuristics, leaving open the principled question of when an embedding is "large enough" and why one model should be preferred over another. In this paper, we aim to place embedding choice on a theoretical footing within the Recursive Consciousness (RC) framework. Previously, we proved that a full \& faithful infinite embedding into an infinite Banach-enriched category exists for any normed-category of semantics. Now we show that practical finite embeddings used in language models and specifically in retrieval-augmented generation (RAG) act as bi-Lipschitz approximations whose operator distortion in the embedded meaning-transfer pipeline ($E\!\circ M\!\circ I$) yields *two-sided bounds* on Jensen--Shannon divergence between induced belief distributions. These bounds give *testable* criteria for meaning preservation, translate into quantitative prescriptions for dimension and context (with human-language scales as guidance). Beyond size, we catalogue structural properties: isotropy, stability, invariance/equivariance, compositionality, calibration, domain/temporal alignment, with diagnostics and mitigations that materially affect retrieval quality. Thus, unlike prior surveys, this work elevates embedding choice from heuristics to *principled design* with measurable tolerances for RAG/agentic and human/AI communication settings.
+Quantum-Classical Recursive Consciousness (QCRC) is a categorical, process-theoretic framework for quantum–classical interfaces with recursive structure. We construct a typed process category RC-dagger (dagger-symmetric monoidal on its quantum fiber, with no global mixed quantum–classical tensor) into which the quantum channel category CPM(FHilb) embeds via a strong dagger-monoidal functor, so that entanglement, decoherence, conditional expectations, and contractive feedback closure are internalized. "Forgetting" is modeled as structured export along pointer/observable-induced conditional expectations rather than deletion, enabling a hierarchy of layers linked by reconstruction and forgetting adjunctions. The theory yields predictions: stable introspective loops exist only for thermodynamically open, sufficiently contractive right-causal dynamics, and semantic-alignment metrics from agent outputs should track nonlocality witnesses, while coherence resources degrade multiplicatively under controlled dephasing. We outline tabletop photonic experiments coupling entangled qubits to classical AI agents to test these predictions.
 
-The code for this paper is in a separate repository: [Choosing Meaning-Preserving Embeddings for RAG](https://github.com/phatware/embedding)
+## [Fear and Loathing in QCRC (Feeling, Understanding, and Temporal Structure as Recursively Coupled Transformations of Identity)](https://www.researchgate.net/publication/404216349_Fear_and_Loathing_in_QCRC_Feeling_Understanding_and_Temporal_Structure_as_Recursively_Coupled_Transformations_of_Identity)
+
+### Abstract
+
+Formal theories of consciousness typically model information integration, global access, higher-order representation, or recurrent processing. None gives feeling an explicit role in the evolving identity of a conscious agent. This paper extends *Quantum-Classical Recursive Consciousness* (QCRC) to close that gap. We distinguish three levels of affect: active (presently felt), latent (not felt now, but still shaping what comes next), and reported (a symbolic description of affect). Each behaves differently under update, phenomenal availability, and identity transfer. On this basis we model understanding as a coupled transformation of conceptual structure and affective state, rather than as pure inference. We also give a modest temporal account. Proper-time evolution of identity is separated from the later, memory-weighted reconstruction of how much changed along an interval. This yields a structural temporal length of an identity trajectory without requiring a full theory of online temporal phenomenology. Together these constructions strengthen the identity-transfer criterion: preserving explicit cognition is not enough to preserve the subject, because the latent affective continuum and its role in future recursive evolution are not recoverable from a purely classical export.
 
 ## Resources
 
